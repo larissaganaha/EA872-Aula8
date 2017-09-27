@@ -1,0 +1,6 @@
+Para criar requisições com os caracteres CR e LF inseridos em cada linha, faça:
+
+	1. Abrir o editor vim com o arquivo desejado;
+	2. Converter o arquivo para o formato do Windows, uma vez que arquivos de texto deste sistema operacional e do linux se diferenciam no fato do primeiro terminar as linhas com CRLF e do segundo com um único caracter LF.
+		2.1. Conversão: digitar no vim: :set ff=dos (converter para Win) ou :set ff=unix (converter para Linux). Em sequida, entrar com :wq para salvar o arquivo e fechar o editor.
+		2.2. Visualização do CRLF: usar o comando cat -A arquivo.txt. O caracter LF é representado por $, enquanto CR é mostrado com ^M.
