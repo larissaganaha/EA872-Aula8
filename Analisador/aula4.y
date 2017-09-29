@@ -39,17 +39,16 @@
   char paramTxt[200];
   char frase[200];
 
-
 %}
 
 %union {
   char str[200];
 }
 
-%token <str> PALAVRA COMANDO_GET PARAMETRO_SP PARAMETRO_UA COMANDO
-%token VIRGULA NL DP INVALIDO 
+%token <str> PALAVRA COMANDO_HTTP PARAMETRO_SP PARAMETRO_UA COMANDO
+%token VIRGULA NL DP INVALIDO
 
-%type <str> palavra DP parametro parametro_NL comando_get comando_sp
+%type <str> palavra DP parametro parametro_NL comando_HTTP comando_sp
 
 %%
 
@@ -61,7 +60,7 @@ linha   :   comando parametro_final {nLinha++;
                                     comando_detectado = 0;}
             | comando NL    {nLinha++;
                             comando_detectado = 0;}
-            | comando_get NL {nLinha++;
+            | comando_HTTP NL {nLinha++;
                             comando_detectado = 0;}
             | comando_sp NL {add_param_list_begin(&frase);
                             nLinha++;
@@ -73,11 +72,11 @@ linha   :   comando parametro_final {nLinha++;
             | NL        {nLinha++;
                         comando_detectado = 0;}
 
-comando_get : COMANDO_GET {
+comando_HTTP : COMANDO_HTTP {
                             strcpy(comandoTxt, $1);
                             add_command_list(&comandoTxt);
                           }
-            | comando_get PARAMETRO_SP{
+            | comando_HTTP PARAMETRO_SP{
                             strcpy(paramTxt, $2);
                             add_param_list_begin(&paramTxt);
                           }
@@ -86,7 +85,7 @@ comando_sp : COMANDO   {frase[0] = '\0';
                         strcpy(comandoTxt, $1);
                         add_command_list(&comandoTxt);}
             |comando_sp VIRGULA {strcat(frase, ",");}
-            |comando_sp DP      {strcat(frase, ":");}            
+            |comando_sp DP      {strcat(frase, ":");}
             |comando_sp palavra {strcat(frase, " ");
                                 strcat(frase, $2);}
 

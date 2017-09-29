@@ -6,12 +6,27 @@
 %}
 
 %x				comandoSpec
-  
+
 %%
 ^GET			{BEGIN comandoSpec;
   				sscanf(yytext, "%s", &yylval.str);
-          return (COMANDO_GET);
+          return (COMANDO_HTTP);
           }
+
+^HEAD			{BEGIN comandoSpec;
+				sscanf(yytext, "%s", &yylval.str);
+        return (COMANDO_HTTP);
+        }
+
+^TRACE			{BEGIN comandoSpec;
+				sscanf(yytext, "%s", &yylval.str);
+        return (COMANDO_HTTP);
+        }
+
+^OPTIONS	    {BEGIN comandoSpec;
+				sscanf(yytext, "%s", &yylval.str);
+        return (COMANDO_HTTP);
+        }
 
 <comandoSpec>[a-zA-Z0-9_Ç-Û;/+.=*()-]+	{
               	sscanf(yytext, "%s", &yylval.str);
