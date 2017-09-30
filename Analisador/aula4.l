@@ -8,6 +8,9 @@
 %x				comandoSpec
 
 %%
+
+^\r\n    {printf("--------carrReturn---------\n");}
+
 ^GET			{BEGIN comandoSpec;
   				sscanf(yytext, "%s", &yylval.str);
           return (COMANDO_HTTP);
@@ -65,6 +68,7 @@ localhost:[0-9]+				{sscanf(yytext, "%s", &yylval.str);
 		}
 [ ]		;
 [#].*   ;
+
 
 [Mm]ensagem[ ][Rr]ecebida:  ;
 

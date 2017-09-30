@@ -13,11 +13,7 @@
   #define CYN   "\x1B[36m"
   #define WHT   "\x1B[37m"
   #define RESET "\x1B[0m"
-
-  void add_command_list(char *command);
-  void add_param_list_begin(char *param);
-  void print_list();
-
+  
   typedef struct command_list{
       char command[200];
       struct command_list *next;
@@ -29,8 +25,14 @@
       struct param_list *next;
   } param_list;
 
+  
+  command_list *add_command_list(char *command);
+  void add_param_list_begin(char *param);
+  void print_list();
+
 
   struct command_list * list = NULL;
+  struct command_list * requisicao = NULL;
 
   //flags de controle
   int comando_detectado = 0;
@@ -38,7 +40,10 @@
   char comandoTxt[200];
   char paramTxt[200];
   char frase[200];
+  
+  int quebra_linha = 0;
 
+  
 %}
 
 %union {
@@ -70,11 +75,20 @@ linha   :   comando parametro_final {nLinha++;
                         comando_detectado = 0;
                         fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido.\n" RESET, nLinha);}
             | NL        {nLinha++;
-                        comando_detectado = 0;}
+                         if(!quebra_linha){
+                            quebra_linha++;
+                         }
+                         else {
+                           quebra_linha = 0;
+                           //EXECUTA FUNCAO 
+                           
+                         }
+                         comando_detectado = 0;}
 
 comando_HTTP : COMANDO_HTTP {
                             strcpy(comandoTxt, $1);
-                            add_command_list(&comandoTxt);
+                            requisicao = add_command_list(&comandoTxt);
+                            printf("--------%s-------\n", requisicao->command);
                           }
             | comando_HTTP PARAMETRO_SP{
                             strcpy(paramTxt, $2);
@@ -136,7 +150,7 @@ void print_list() {
     }
 }
 
-void add_command_list(char *command) {
+command_list *add_command_list(char *command) {
     //se a lista nao tiver sido criada, cria o primeiro elemento
     if(list == NULL){
 
@@ -146,7 +160,7 @@ void add_command_list(char *command) {
         list->next = NULL;
         list->params = NULL;
 
-        return;
+        return list;
     }
 
     command_list * current = list;
@@ -160,7 +174,7 @@ void add_command_list(char *command) {
     current->next->next = NULL;
     current->next->params = NULL;
 
-    return;
+    return current->next;
 }
 
 
