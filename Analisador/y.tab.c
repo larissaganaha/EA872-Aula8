@@ -64,62 +64,64 @@
 /* Copy the first part of user declarations.  */
 #line 2 "aula4.y" /* yacc.c:339  */
 
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <string.h>
-  #include <unistd.h>
-  #include <fcntl.h>
-  #include <sys/stat.h>
-  #include <sys/types.h>
-  
-  #define CHUNK 1024
-  #define ADDRESS_SIZE 500
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+    #include <unistd.h>
+    #include <fcntl.h>
+    #include <time.h>
+    #include <sys/stat.h>
+    #include <sys/types.h>
+    
+    #define CHUNK 1024
+    #define ADDRESS_SIZE 500
+    
+    //cores de print
+    #define RED   "\x1B[31m"
+    #define GRN   "\x1B[32m"
+    #define YEL   "\x1B[33m"
+    #define BLU   "\x1B[34m"
+    #define MAG   "\x1B[35m"
+    #define CYN   "\x1B[36m"
+    #define WHT   "\x1B[37m"
+    #define RESET "\x1B[0m"
+    
+    typedef struct command_list{
+        char command[200];
+        struct command_list *next;
+        struct param_list *params;
+    } command_list;
+    
+    typedef struct param_list{
+        char param[200];
+        struct param_list *next;
+    } param_list;
+    
+    
+    command_list *add_command_list(char *command);
+    void add_param_list_begin(char *param);
+    void print_list();
+    void getOutput(command_list * requisicao);
+    int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat);
+    command_list * findParam(command_list * requisicao, char * param);
+    
+    
+    struct command_list * list = NULL;
+    struct command_list * requisicao = NULL;
+    
+    //flags de controle
+    int comando_detectado = 0;
+    int nLinha = 0;
+    char comandoTxt[200];
+    char paramTxt[200];
+    char frase[200];
+    
+    int quebra_linha = 0;
+    
+    
+    
 
-  //cores de print
-  #define RED   "\x1B[31m"
-  #define GRN   "\x1B[32m"
-  #define YEL   "\x1B[33m"
-  #define BLU   "\x1B[34m"
-  #define MAG   "\x1B[35m"
-  #define CYN   "\x1B[36m"
-  #define WHT   "\x1B[37m"
-  #define RESET "\x1B[0m"
-  
-  typedef struct command_list{
-      char command[200];
-      struct command_list *next;
-      struct param_list *params;
-  } command_list;
-
-  typedef struct param_list{
-      char param[200];
-      struct param_list *next;
-  } param_list;
-
-  
-  command_list *add_command_list(char *command);
-  void add_param_list_begin(char *param);
-  void print_list();
-  void getOutput(command_list * requisicao);
-  int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat);
-  int get_access(char *local );
-
-
-  struct command_list * list = NULL;
-  struct command_list * requisicao = NULL;
-
-  //flags de controle
-  int comando_detectado = 0;
-  int nLinha = 0;
-  char comandoTxt[200];
-  char paramTxt[200];
-  char frase[200];
-  
-  int quebra_linha = 0;
-
-  
-
-#line 123 "y.tab.c" /* yacc.c:339  */
+#line 125 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -181,11 +183,11 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 59 "aula4.y" /* yacc.c:355  */
+#line 60 "aula4.y" /* yacc.c:355  */
 
-  char str[200];
+    char str[200];
 
-#line 189 "y.tab.c" /* yacc.c:355  */
+#line 191 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -202,7 +204,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 206 "y.tab.c" /* yacc.c:358  */
+#line 208 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -500,9 +502,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    70,    70,    71,    74,    77,    80,    83,    88,    92,
-     103,   109,   114,   117,   118,   119,   122,   126,   127,   130,
-     131,   133,   134,   136,   142,   148
+       0,    71,    71,    72,    75,    78,    81,    84,    89,    93,
+     104,   110,   115,   118,   119,   120,   123,   127,   128,   131,
+     132,   134,   135,   137,   143,   149
 };
 #endif
 
@@ -1293,140 +1295,140 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 74 "aula4.y" /* yacc.c:1646  */
+#line 75 "aula4.y" /* yacc.c:1646  */
     {nLinha++;
-                                     quebra_linha = 0;
-                                    comando_detectado = 0;}
-#line 1301 "y.tab.c" /* yacc.c:1646  */
+    quebra_linha = 0;
+    comando_detectado = 0;}
+#line 1303 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 77 "aula4.y" /* yacc.c:1646  */
+#line 78 "aula4.y" /* yacc.c:1646  */
     {nLinha++;
-                             quebra_linha = 0;
-                            comando_detectado = 0;}
-#line 1309 "y.tab.c" /* yacc.c:1646  */
+    quebra_linha = 0;
+    comando_detectado = 0;}
+#line 1311 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 80 "aula4.y" /* yacc.c:1646  */
+#line 81 "aula4.y" /* yacc.c:1646  */
     {nLinha++;
-                               quebra_linha = 0;
-                              comando_detectado = 0;}
-#line 1317 "y.tab.c" /* yacc.c:1646  */
+    quebra_linha = 0;
+    comando_detectado = 0;}
+#line 1319 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 83 "aula4.y" /* yacc.c:1646  */
+#line 84 "aula4.y" /* yacc.c:1646  */
     {add_param_list_begin(&frase);
-                            nLinha++;
-                             quebra_linha = 0;
-                            comando_detectado = 0;
-                            }
-#line 1327 "y.tab.c" /* yacc.c:1646  */
+    nLinha++;
+    quebra_linha = 0;
+    comando_detectado = 0;
+}
+#line 1329 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 88 "aula4.y" /* yacc.c:1646  */
+#line 89 "aula4.y" /* yacc.c:1646  */
     {nLinha++;
-                         quebra_linha = 0;
-                        comando_detectado = 0;
-                        fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido.\n" RESET, nLinha);}
-#line 1336 "y.tab.c" /* yacc.c:1646  */
+    quebra_linha = 0;
+    comando_detectado = 0;
+    fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido.\n" RESET, nLinha);}
+#line 1338 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 92 "aula4.y" /* yacc.c:1646  */
+#line 93 "aula4.y" /* yacc.c:1646  */
     {nLinha++;
-                         if(!quebra_linha){
-                            quebra_linha++;
-                         }
-                         else {
-                           quebra_linha = 0;
-                           printf("--------Tratando %s -------\n", requisicao->command);
-                           getOutput(requisicao);
-                         }
-                         comando_detectado = 0;}
-#line 1351 "y.tab.c" /* yacc.c:1646  */
+    if(!quebra_linha){
+        quebra_linha++;
+    }
+    else {
+        quebra_linha = 0;
+        //printf("--------Tratando %s -------\n", requisicao->command);
+        getOutput(requisicao);
+    }
+    comando_detectado = 0;}
+#line 1353 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 103 "aula4.y" /* yacc.c:1646  */
+#line 104 "aula4.y" /* yacc.c:1646  */
     {
-                            strcpy(comandoTxt, (yyvsp[0].str));
-                            requisicao = add_command_list(&comandoTxt);
-                            printf("--------Requisicao %s encontrada, coletando parametros-------\n", requisicao->command);
-
-                          }
-#line 1362 "y.tab.c" /* yacc.c:1646  */
+    strcpy(comandoTxt, (yyvsp[0].str));
+    requisicao = add_command_list(&comandoTxt);
+    //printf("--------Requisicao %s encontrada, coletando parametros-------\n", requisicao->command);
+    
+}
+#line 1364 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 109 "aula4.y" /* yacc.c:1646  */
+#line 110 "aula4.y" /* yacc.c:1646  */
     {
-                            strcpy(paramTxt, (yyvsp[0].str));
-                            add_param_list_begin(&paramTxt);
-                          }
-#line 1371 "y.tab.c" /* yacc.c:1646  */
+    strcpy(paramTxt, (yyvsp[0].str));
+    add_param_list_begin(&paramTxt);
+}
+#line 1373 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 114 "aula4.y" /* yacc.c:1646  */
+#line 115 "aula4.y" /* yacc.c:1646  */
     {frase[0] = '\0';
-                        strcpy(comandoTxt, (yyvsp[0].str));
-                        add_command_list(&comandoTxt);}
-#line 1379 "y.tab.c" /* yacc.c:1646  */
+    strcpy(comandoTxt, (yyvsp[0].str));
+    add_command_list(&comandoTxt);}
+#line 1381 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 117 "aula4.y" /* yacc.c:1646  */
+#line 118 "aula4.y" /* yacc.c:1646  */
     {strcat(frase, ",");}
-#line 1385 "y.tab.c" /* yacc.c:1646  */
+#line 1387 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 118 "aula4.y" /* yacc.c:1646  */
+#line 119 "aula4.y" /* yacc.c:1646  */
     {strcat(frase, ":");}
-#line 1391 "y.tab.c" /* yacc.c:1646  */
+#line 1393 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 119 "aula4.y" /* yacc.c:1646  */
+#line 120 "aula4.y" /* yacc.c:1646  */
     {strcat(frase, " ");
-                                strcat(frase, (yyvsp[0].str));}
-#line 1398 "y.tab.c" /* yacc.c:1646  */
+    strcat(frase, (yyvsp[0].str));}
+#line 1400 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 122 "aula4.y" /* yacc.c:1646  */
+#line 123 "aula4.y" /* yacc.c:1646  */
     {comando_detectado = 1;
-                        strcpy(comandoTxt, (yyvsp[-1].str));
-                        add_command_list(&comandoTxt);}
-#line 1406 "y.tab.c" /* yacc.c:1646  */
+    strcpy(comandoTxt, (yyvsp[-1].str));
+    add_command_list(&comandoTxt);}
+#line 1408 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 136 "aula4.y" /* yacc.c:1646  */
+#line 137 "aula4.y" /* yacc.c:1646  */
     { if(comando_detectado){
-                                strcpy(paramTxt, (yyvsp[-1].str));
-                                add_param_list_begin(&paramTxt);
-                             }
-                           }
-#line 1416 "y.tab.c" /* yacc.c:1646  */
+    strcpy(paramTxt, (yyvsp[-1].str));
+    add_param_list_begin(&paramTxt);
+}
+}
+#line 1418 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 142 "aula4.y" /* yacc.c:1646  */
+#line 143 "aula4.y" /* yacc.c:1646  */
     { if(comando_detectado){
-                                strcpy(paramTxt, (yyvsp[-1].str));
-                                add_param_list_begin(&paramTxt);
-                             }
-                           }
-#line 1426 "y.tab.c" /* yacc.c:1646  */
+    strcpy(paramTxt, (yyvsp[-1].str));
+    add_param_list_begin(&paramTxt);
+}
+}
+#line 1428 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1430 "y.tab.c" /* yacc.c:1646  */
+#line 1432 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1654,59 +1656,127 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 151 "aula4.y" /* yacc.c:1906  */
+#line 152 "aula4.y" /* yacc.c:1906  */
 
-  
+
+char *formatdate(char *buff, time_t val){
+    strftime(buff,200, "%c %Z", localtime(&val));
+    return buff;
+}
+void getCabecalho(char *local, command_list * requisicao){
+    char address[200];
+    char date[100];
+    int fail = 0;
+    
+    strcpy(address, ".");
+    strcat(address, local);
+    
+    //printf("˜˜˜˜˜˜˜˜˜~addresss ˜˜˜˜˜˜˜˜˜~\n");
+    //printf(address);
+    printf("\n");
+    
+    struct stat fileStat;
+    
+    int file=0;
+    
+    // nao conseguiu abrir o endereço
+    if((file = open(address, O_RDONLY)) < 0){
+        printf("------------------------------------------------------\nCouldn't open file: %s\n------------------------------------------------------\n",address);
+        fail = 1;
+    }
+    //printf("***** Opened file: file = %d *****\n", file);
+    
+    if(fstat(file,&fileStat) < 0)
+    fail = 1;
+    
+    char buffer[30];
+    struct timeval tv;
+    time_t curtime;
+    
+    gettimeofday(&tv, NULL);
+    curtime=tv.tv_sec;
+    strftime(buffer,30,"%c %Z",localtime(&curtime));
+    
+    if(!fail)
+        printf("------------------------------------------------------\nInformation for %s\n------------------------------------------------------\n",address);
+    if(findParam(requisicao, "Host") && !fail) //atualmente aceita qualquer host
+        printf("HTTP 1.1 200 ok\n");
+    else
+        printf("HTTP 1.1 400 Bad Request\n");
+        
+
+    printf("Server: \tServidor HTTP ver. 0.1 Grupo 7\n");
+    if(findParam(requisicao, "Connection"))
+        printf("Connection: \t%s\n", findParam(requisicao, "Connection")->params->param);
+    printf("Date: \t\t%s\n",buffer);
+    if(!fail){
+        printf("Content-Length: %d bytes\n",fileStat.st_size);
+        printf("Last-Modified: \t%s\n", formatdate(date, fileStat.st_mtime));
+        }
+    printf("Content-Type: \ttext/html\n");
+    printf("\n\n\n");
+    
+    
+}
+
+
+
 void getOutput(command_list * requisicao){
     if(requisicao == NULL){
-      printf("Nada para tratar\n");
-      return;
+        //printf("Nada para tratar\n");
+        return;
     }
     if (strcmp(requisicao->command, "GET") == 0){
-      printf("\n");
-      if(requisicao->next != NULL){ //há parametros
-        //imprime cabecalho padrao
-        get_access(requisicao->params->next->param); //imprime o HTML
-      }
-      else{
-        get_access(requisicao->params->next->param); //imprime o HTML
-      }
+        printf("\n");
+        if(requisicao->next != NULL){ //há parametros
+            getCabecalho(requisicao->params->next->param, requisicao); //imprime o cabecalho
+            get_access(requisicao->params->next->param);   //imprime o HTML
+        }
+        else{
+            get_access(requisicao->params->next->param);   //imprime o HTML
+        }
     }
     else if(strcmp(requisicao->command, "HEAD") == 0){
-      if(requisicao->next != NULL){ //há parametros
-        //func
-      }
-      
+        if(requisicao->next != NULL){ //há parametros
+            getCabecalho(requisicao->params->next->param, requisicao); //imprime o cabecalho
+        }
+        else{
+            getCabecalho(requisicao->params->next->param, requisicao); //imprime o cabecalho
+        }
     }
     else if(strcmp(requisicao->command, "TRACE") == 0){
-      if(requisicao->next != NULL){ //há parametros
-        //func
-      }
-      
+        if(requisicao->next != NULL){ //há parametros
+            getCabecalho(requisicao->params->next->param, requisicao); //imprime o cabecalho
+        }
+        else{
+            getCabecalho(requisicao->params->next->param, requisicao); //imprime o cabecalho
+        }
     }
     else if(strcmp(requisicao->command, "OPTIONS") == 0){
-      if(requisicao->next != NULL){ //há parametros
-        //func
-      }
-      
+        if(requisicao->next != NULL){ //há parametros
+            getCabecalho(requisicao->params->next->param, requisicao); //imprime o cabecalho
+        }
+        else{
+            getCabecalho(requisicao->params->next->param, requisicao); //imprime o cabecalho
+        }
     }
     
 }
 
-  
+
 
 void print_list() {
     command_list * current = list;
-
+    
     while (current != NULL) {
-
+        
         printf("%s\n", current->command);
-
+        
         while(current->params != NULL){
             printf("\tParâmetro: %s\n", current->params->param);
             current->params = current->params->next;
         }
-
+        
         current = current->next;
     }
 }
@@ -1714,86 +1784,86 @@ void print_list() {
 command_list *add_command_list(char *command) {
     //se a lista nao tiver sido criada, cria o primeiro elemento
     if(list == NULL){
-
+        
         list = malloc(sizeof(command_list));
-
+        
         strcpy(list->command, command);
         list->next = NULL;
         list->params = NULL;
-
+        
         return list;
     }
-
+    
     command_list * current = list;
-
+    
     while (current->next != NULL) {
         current = current->next;
     }
-
+    
     current->next = malloc(sizeof(command_list));
     strcpy(current->next->command, command);
     current->next->next = NULL;
     current->next->params = NULL;
-
+    
     return current->next;
 }
 
 
 void add_param_list_begin(char *param) {
-
+    
     command_list * current = list;
-
+    
     while (current->next != NULL) {
         current = current->next;
     }
-
+    
     //se a lista de parametros nao tiver sido criada, cria o primeiro elemento
     if(current->params == NULL){
-
+        
         current->params = malloc(sizeof(param_list));
-
+        
         strcpy(current->params->param, param);
         current->params->next = NULL;
-
+        
         return;
     }
     param_list * new_node;
     new_node = malloc(sizeof(param_list));
-
+    
     strcpy(new_node->param, param);
     new_node->next = current->params;
     current->params = new_node;
-
+    
     return;
 }
 
 /*
-retorno:
-0 = nao ha permissao de leitura
-1 = o arquivo foi impresso corretamente
-*/
+ retorno:
+ 0 = nao ha permissao de leitura
+ 1 = o arquivo foi impresso corretamente
+ */
 int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat){
-  int file, size;
-  char  buf[CHUNK];
-  //verifica permissao de leitura
-  if( !(fileStat.st_mode & S_IRUSR) ){
-        fprintf(stderr, "403 - Forbidden\n");   return 0;
-  }
-
-  //tenta abrir o arquivo
-  if ((file = open(address, O_RDONLY, 0600)) < 0){
-    fprintf(stderr, "Erro na abertura de %s (tem permissao de leitura).\n", address);
-    exit(0);
-  }
-
-  //le e escreve o arquivo na saida padrao
-  while( (size =  read(file, buf, sizeof(buf))) > 0 ){
-    if(write( 1, buf, size) < 0){
-      fprintf(stderr, "Erro na escrita de %s.\n", address);
-      exit(0);
+    int file, size;
+    char  buf[CHUNK];
+    //verifica permissao de leitura
+    if( !(fileStat.st_mode & S_IRUSR) ){
+        fprintf(stderr, "403 - Forbidden\n");        return 0;
     }
-  }
-  return 1;
+    
+    //tenta abrir o arquivo
+    if ((file = open(address, O_RDONLY, 0600)) < 0){
+        fprintf(stderr, "Erro na abertura de %s (tem permissao de leitura).\n", address);
+        exit(0);
+    }
+    
+    //le e escreve o arquivo na saida padrao
+    while( (size =  read(file, buf, sizeof(buf))) > 0 ){
+        if(write( 1, buf, size) < 0){
+            fprintf(stderr, "Erro na escrita de %s.\n", address);
+            exit(0);
+        }
+    }
+    return 1;
 }
 
 //Acessa o recurso com o get para imprimir seu conteudo
@@ -1804,7 +1874,7 @@ int get_access(char *local ) {
     
     strcpy(address, "."); //procura a partir do diretorio local
     strcat(address, local);
-
+    
     //verifica se o arquivo existe, e associa ele a fileStat
     if(stat(address,&fileStat) < 0){
         fprintf(stderr, "404 - Not Found.\n");
@@ -1813,60 +1883,74 @@ int get_access(char *local ) {
     
     //verifica se o recurso eh um diretorio
     if( S_ISDIR(fileStat.st_mode) ) {
-      //se ele possui permissao de execucao (acesso)
-    if( fileStat.st_mode & S_IXUSR ){
-
-      //concatena address com index
-        strcpy(temp_address, "\0");
-        strcat(temp_address, address);
-        if(address[strlen(address)-1] != '/')   //se o endereco nao termina em '/'
-          strcat(temp_address, "/");        //insere '/' no final do endereco
-        strcat(temp_address, "index.html");
-
-        //verifica se o index.html existe, e associa ele a fileStat
-        if(stat(temp_address,&fileStat) >= 0){
-          if( escreveArquivo(temp_address, fileStat) ) return 0;
-          aux = 1; //index nao tem permissao de leitura
+        //se ele possui permissao de execucao (acesso)
+        if( fileStat.st_mode & S_IXUSR ){
+            
+            //concatena address com index
+            strcpy(temp_address, "\0");
+            strcat(temp_address, address);
+            if(address[strlen(address)-1] != '/')   //se o endereco nao termina em '/'
+            strcat(temp_address, "/");        //insere '/' no final do endereco
+            strcat(temp_address, "index.html");
+            
+            //verifica se o index.html existe, e associa ele a fileStat
+            if(stat(temp_address,&fileStat) >= 0){
+                if( escreveArquivo(temp_address, fileStat) ) return 0;
+                aux = 1; //index nao tem permissao de leitura
+            }
+            
+            //concatena address com welcome
+            strcpy(temp_address, "\0");
+            strcat(temp_address, address);
+            if(address[strlen(address)-1] != '/')   //se o endereco nao termina em '/'
+            strcat(temp_address, "/");        //insere '/' no final do endereco
+            strcat(temp_address, "welcome.html");
+            
+            //verifica se o welcome.html existe, e associa ele a fileStat
+            if(stat(temp_address,&fileStat) >= 0){
+                if( escreveArquivo(temp_address, fileStat) ) return 0;
+                fprintf(stderr, "403 - Forbidden\n");
+                return 1;
+            }
+            
+            if(aux){
+                fprintf(stderr, "403 - Forbidden\n");
+                return 1;
+            }
+            
+            //nenhum dos arquivos existem
+            fprintf(stderr, "404 - Not Found\n");
+            return 1;
         }
-
-        //concatena address com welcome
-        strcpy(temp_address, "\0");
-        strcat(temp_address, address);
-        if(address[strlen(address)-1] != '/')   //se o endereco nao termina em '/'
-          strcat(temp_address, "/");        //insere '/' no final do endereco
-        strcat(temp_address, "welcome.html");
-
-        //verifica se o welcome.html existe, e associa ele a fileStat
-        if(stat(temp_address,&fileStat) >= 0){
-          if( escreveArquivo(temp_address, fileStat) ) return 0;
+        //se ele nao possui permissao de execucao (acesso)
+        else{
             fprintf(stderr, "403 - Forbidden\n");
-          return 1;
-          }
-
-        if(aux){
-          fprintf(stderr, "403 - Forbidden\n");
-        return 1;
+            return 1;
         }
-
-        //nenhum dos arquivos existem
-        fprintf(stderr, "404 - Not Found\n");
-          return 1;
-      }
-    //se ele nao possui permissao de execucao (acesso)
-    else{
-      fprintf(stderr, "403 - Forbidden\n");
-      return 1;
-    }
     }
     //se o recurso eh um arquivo
-    else {      
-    return escreveArquivo(address, fileStat);     
+    else {
+        return escreveArquivo(address, fileStat);
     }
-  
+    
     return 1;
+}
+
+//retorna o ponteiro para o parametro("comando") procurado
+command_list * findParam(command_list * requisicao, char * param){
+    command_list * current = requisicao;
+    
+    while (current->next != NULL) {
+        current = current->next;
+        
+        if(strcmp(current->command , param) == 0 ){
+            return current;
+        }
+    }
+    return NULL;
 }
 
 void main() {
     yyparse();
-    print_list();
+    //print_list();
 }
