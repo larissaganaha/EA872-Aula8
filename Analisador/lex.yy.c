@@ -962,8 +962,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "aula4.l"
-#line 2 "aula4.l"
+#line 1 "aula8.l"
+#line 2 "aula8.l"
 
   #include "y.tab.h"
   #include <string.h>
@@ -1191,7 +1191,7 @@ YY_DECL
 		}
 
 	{
-#line 10 "aula4.l"
+#line 10 "aula8.l"
 
 #line 1197 "lex.yy.c"
 
@@ -1253,7 +1253,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 11 "aula4.l"
+#line 11 "aula8.l"
 {BEGIN comandoSpec;
   				sscanf(yytext, "%s", &yylval.str);
           return (COMANDO_HTTP);
@@ -1261,7 +1261,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 16 "aula4.l"
+#line 16 "aula8.l"
 {BEGIN comandoSpec;
 				sscanf(yytext, "%s", &yylval.str);
         return (COMANDO_HTTP);
@@ -1269,7 +1269,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 21 "aula4.l"
+#line 21 "aula8.l"
 {BEGIN comandoSpec;
 				sscanf(yytext, "%s", &yylval.str);
         return (COMANDO_HTTP);
@@ -1277,7 +1277,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 26 "aula4.l"
+#line 26 "aula8.l"
 {BEGIN comandoSpec;
 				sscanf(yytext, "%s", &yylval.str);
         return (COMANDO_HTTP);
@@ -1285,7 +1285,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 31 "aula4.l"
+#line 31 "aula8.l"
 {
               	sscanf(yytext, "%s", &yylval.str);
   				return (PARAMETRO_SP);
@@ -1294,7 +1294,7 @@ YY_RULE_SETUP
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 36 "aula4.l"
+#line 36 "aula8.l"
 {
 				BEGIN 0;
 	          	strcpy(yylval.str, yytext);
@@ -1303,7 +1303,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 42 "aula4.l"
+#line 42 "aula8.l"
 {
 			sscanf("User-Agent", "%s", &yylval.str);
 			return (COMANDO);
@@ -1311,28 +1311,28 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 47 "aula4.l"
+#line 47 "aula8.l"
 { sscanf(yytext, "%s", &yylval.str);
 		  return (PALAVRA);
 		}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 51 "aula4.l"
+#line 51 "aula8.l"
 {sscanf(yytext, "%s", &yylval.str);
 		  return (PALAVRA);
 		}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 55 "aula4.l"
+#line 55 "aula8.l"
 { sscanf(yytext, "%s", &yylval.str);
 		  return(DP);
 		}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 58 "aula4.l"
+#line 58 "aula8.l"
 { sscanf(yytext, "%s", &yylval.str);
 		  return(VIRGULA);
 		}
@@ -1340,7 +1340,7 @@ YY_RULE_SETUP
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 61 "aula4.l"
+#line 61 "aula8.l"
 {
 		  BEGIN 0;
           strcpy(yylval.str, yytext);
@@ -1349,38 +1349,38 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 66 "aula4.l"
+#line 66 "aula8.l"
 ;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 67 "aula4.l"
+#line 67 "aula8.l"
 ;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 68 "aula4.l"
+#line 68 "aula8.l"
 ;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 71 "aula4.l"
+#line 71 "aula8.l"
 ;
 	YY_BREAK
 /*a seguinte linha pode vir a ser usada para decidir se a conexao foi bem estabelecida, e se os parametros devem ser coletados*/
 case 17:
 YY_RULE_SETUP
-#line 74 "aula4.l"
+#line 74 "aula8.l"
 ;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 76 "aula4.l"
+#line 76 "aula8.l"
 return(INVALIDO);
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 78 "aula4.l"
+#line 78 "aula8.l"
 ECHO;
 	YY_BREAK
 #line 1387 "lex.yy.c"
@@ -2388,7 +2388,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 78 "aula4.l"
+#line 78 "aula8.l"
 
 
 

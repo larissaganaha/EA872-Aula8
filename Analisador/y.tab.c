@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 2 "aula4.y" /* yacc.c:339  */
+#line 2 "aula8.y" /* yacc.c:339  */
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -183,7 +183,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 60 "aula4.y" /* yacc.c:355  */
+#line 60 "aula8.y" /* yacc.c:355  */
 
     char str[200];
 
@@ -1295,7 +1295,7 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 75 "aula4.y" /* yacc.c:1646  */
+#line 75 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
     quebra_linha = 0;
     comando_detectado = 0;}
@@ -1303,7 +1303,7 @@ yyreduce:
     break;
 
   case 5:
-#line 78 "aula4.y" /* yacc.c:1646  */
+#line 78 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
     quebra_linha = 0;
     comando_detectado = 0;}
@@ -1311,7 +1311,7 @@ yyreduce:
     break;
 
   case 6:
-#line 81 "aula4.y" /* yacc.c:1646  */
+#line 81 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
     quebra_linha = 0;
     comando_detectado = 0;}
@@ -1319,7 +1319,7 @@ yyreduce:
     break;
 
   case 7:
-#line 84 "aula4.y" /* yacc.c:1646  */
+#line 84 "aula8.y" /* yacc.c:1646  */
     {add_param_list_begin(&frase);
     nLinha++;
     quebra_linha = 0;
@@ -1329,7 +1329,7 @@ yyreduce:
     break;
 
   case 8:
-#line 89 "aula4.y" /* yacc.c:1646  */
+#line 89 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
     quebra_linha = 0;
     comando_detectado = 0;
@@ -1338,7 +1338,7 @@ yyreduce:
     break;
 
   case 9:
-#line 93 "aula4.y" /* yacc.c:1646  */
+#line 93 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
     if(!quebra_linha){
         quebra_linha++;
@@ -1353,7 +1353,7 @@ yyreduce:
     break;
 
   case 10:
-#line 104 "aula4.y" /* yacc.c:1646  */
+#line 104 "aula8.y" /* yacc.c:1646  */
     {
     strcpy(comandoTxt, (yyvsp[0].str));
     requisicao = add_command_list(&comandoTxt);
@@ -1364,7 +1364,7 @@ yyreduce:
     break;
 
   case 11:
-#line 110 "aula4.y" /* yacc.c:1646  */
+#line 110 "aula8.y" /* yacc.c:1646  */
     {
     strcpy(paramTxt, (yyvsp[0].str));
     add_param_list_begin(&paramTxt);
@@ -1373,7 +1373,7 @@ yyreduce:
     break;
 
   case 12:
-#line 115 "aula4.y" /* yacc.c:1646  */
+#line 115 "aula8.y" /* yacc.c:1646  */
     {frase[0] = '\0';
     strcpy(comandoTxt, (yyvsp[0].str));
     add_command_list(&comandoTxt);}
@@ -1381,26 +1381,26 @@ yyreduce:
     break;
 
   case 13:
-#line 118 "aula4.y" /* yacc.c:1646  */
+#line 118 "aula8.y" /* yacc.c:1646  */
     {strcat(frase, ",");}
 #line 1387 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 119 "aula4.y" /* yacc.c:1646  */
+#line 119 "aula8.y" /* yacc.c:1646  */
     {strcat(frase, ":");}
 #line 1393 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 120 "aula4.y" /* yacc.c:1646  */
+#line 120 "aula8.y" /* yacc.c:1646  */
     {strcat(frase, " ");
     strcat(frase, (yyvsp[0].str));}
 #line 1400 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 123 "aula4.y" /* yacc.c:1646  */
+#line 123 "aula8.y" /* yacc.c:1646  */
     {comando_detectado = 1;
     strcpy(comandoTxt, (yyvsp[-1].str));
     add_command_list(&comandoTxt);}
@@ -1408,7 +1408,7 @@ yyreduce:
     break;
 
   case 23:
-#line 137 "aula4.y" /* yacc.c:1646  */
+#line 137 "aula8.y" /* yacc.c:1646  */
     { if(comando_detectado){
     strcpy(paramTxt, (yyvsp[-1].str));
     add_param_list_begin(&paramTxt);
@@ -1418,7 +1418,7 @@ yyreduce:
     break;
 
   case 24:
-#line 143 "aula4.y" /* yacc.c:1646  */
+#line 143 "aula8.y" /* yacc.c:1646  */
     { if(comando_detectado){
     strcpy(paramTxt, (yyvsp[-1].str));
     add_param_list_begin(&paramTxt);
@@ -1656,7 +1656,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 152 "aula4.y" /* yacc.c:1906  */
+#line 152 "aula8.y" /* yacc.c:1906  */
 
 
 char *formatdate(char *buff, time_t val){
