@@ -60,12 +60,14 @@ localhost:[0-9]+				{sscanf(yytext, "%s", &yylval.str);
 		}
 \n		{
 		  BEGIN 0;
+					printf("this should not match*************************************************");
           strcpy(yylval.str, yytext);
 		  return(NL);
 		}
 [ ]		;
 [#].*   ;
-[\r]	;
+^\r\n		{return(FIM_REQ);}
+\r\n		{return(NL);}
 
 
 [Mm]ensagem[ ][Rr]ecebida:  ;
