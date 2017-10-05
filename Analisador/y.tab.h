@@ -53,7 +53,8 @@ extern int yydebug;
     VIRGULA = 263,
     NL = 264,
     DP = 265,
-    INVALIDO = 266
+    INVALIDO = 266,
+    FIM_REQ = 267
   };
 #endif
 /* Tokens.  */
@@ -66,6 +67,7 @@ extern int yydebug;
 #define NL 264
 #define DP 265
 #define INVALIDO 266
+#define FIM_REQ 267
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -76,7 +78,7 @@ union YYSTYPE
 
     char str[200];
 
-#line 80 "y.tab.h" /* yacc.c:1909  */
+#line 82 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

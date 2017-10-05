@@ -58,14 +58,14 @@ localhost:[0-9]+				{sscanf(yytext, "%s", &yylval.str);
 ,		{ sscanf(yytext, "%s", &yylval.str);
 		  return(VIRGULA);
 		}
-\n		{
-		  BEGIN 0;
-          strcpy(yylval.str, yytext);
-		  return(NL);
-		}
+
 [ ]		;
 [#].*   ;
-[\r]	;
+^\r\n	  {return(FIM_REQ);}
+\r\n		{
+		  BEGIN 0;
+		  return(NL);
+		}
 
 
 [Mm]ensagem[ ][Rr]ecebida:  ;
@@ -73,6 +73,9 @@ localhost:[0-9]+				{sscanf(yytext, "%s", &yylval.str);
 	/*a seguinte linha pode vir a ser usada para decidir se a conexao foi bem estabelecida, e se os parametros devem ser coletados*/
 .*já[ ]está[ ]aceitando[ ]conexões[ ]de[ ]clientes[ ]HTTP.	;
 
-.		return(INVALIDO);
+.		{
+    printf("Nenhuma regra casou com esse caractere: %s\n", yytext);
+    return(INVALIDO);
+    }
 
 %%
