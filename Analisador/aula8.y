@@ -9,10 +9,10 @@
     #include <sys/stat.h>
     #include <sys/types.h>
     #include "serverlib.h"
-    
+
     #define CHUNK 1024
     #define ADDRESS_SIZE 500
-    
+
     //cores de print
     #define RED   "\x1B[31m"
     #define GRN   "\x1B[32m"
@@ -22,40 +22,22 @@
     #define CYN   "\x1B[36m"
     #define WHT   "\x1B[37m"
     #define RESET "\x1B[0m"
-    
-    typedef struct command_list{
-        char command[200];
-        struct command_list *next;
-        struct param_list *params;
-    } command_list;
-    
-    typedef struct param_list{
-        char param[200];
-        struct param_list *next;
-    } param_list;
-    
-    
+
     command_list *add_command_list(char *command);
-    void add_param_list_begin(char *param);
-    void print_list();
-    void getOutput(command_list * requisicao);
-    int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat);
-    command_list * findParam(command_list * requisicao, char * param);
-    
-    
+
     struct command_list * list = NULL;
     struct command_list * requisicao = NULL;
-    
+
     //flags de controle
     int comando_detectado = 0;
     int nLinha = 0;
     char comandoTxt[200];
     char paramTxt[200];
     char frase[200];
-    
+
     int quebra_linha = 0;
-    
-    
+
+
     %}
 
 %union {
@@ -100,7 +82,7 @@ comando_HTTP : COMANDO_HTTP {
     strcpy(comandoTxt, $1);
     requisicao = add_command_list(&comandoTxt);
     //printf("--------Requisicao %s encontrada, coletando parametros-------\n", requisicao->command);
-    
+
 }
 | comando_HTTP PARAMETRO_SP{
     strcpy(paramTxt, $2);
@@ -152,16 +134,16 @@ palavra : PALAVRA
 
 void print_list() {
     command_list * current = list;
-    
+
     while (current != NULL) {
-        
+
         printf("%s\n", current->command);
-        
+
         while(current->params != NULL){
             printf("\tParâmetro: %s\n", current->params->param);
             current->params = current->params->next;
         }
-        
+
         current = current->next;
     }
 }
@@ -169,64 +151,59 @@ void print_list() {
 command_list *add_command_list(char *command) {
     //se a lista nao tiver sido criada, cria o primeiro elemento
     if(list == NULL){
-        
+
         list = malloc(sizeof(command_list));
-        
+
         strcpy(list->command, command);
         list->next = NULL;
         list->params = NULL;
-        
+
         return list;
     }
-    
+
     command_list * current = list;
-    
+
     while (current->next != NULL) {
         current = current->next;
     }
-    
+
     current->next = malloc(sizeof(command_list));
     strcpy(current->next->command, command);
     current->next->next = NULL;
     current->next->params = NULL;
-    
+
     return current->next;
 }
 
 
 void add_param_list_begin(char *param) {
-    
+
     command_list * current = list;
-    
+
     while (current->next != NULL) {
         current = current->next;
     }
-    
+
     //se a lista de parametros nao tiver sido criada, cria o primeiro elemento
     if(current->params == NULL){
-        
+
         current->params = malloc(sizeof(param_list));
-        
+
         strcpy(current->params->param, param);
         current->params->next = NULL;
-        
+
         return;
     }
     param_list * new_node;
     new_node = malloc(sizeof(param_list));
-    
+
     strcpy(new_node->param, param);
     new_node->next = current->params;
     current->params = new_node;
-    
+
     return;
 }
 
 command_list *symtab_get_parse_result(){
   return requisicao;
-}
-
-void main() {
-    yyparse();
-    //print_list();
 }

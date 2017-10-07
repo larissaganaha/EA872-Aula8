@@ -1,5 +1,7 @@
+all: gcc lib yacc flex
 
-all: gcc yacc flex
+lib: serverlib.c
+	gcc -o serverlib.o -c serverlib.c
 
 yacc: aula8.y
 	yacc -d aula8.y
@@ -7,5 +9,5 @@ yacc: aula8.y
 flex: aula8.l
 	flex aula8.l
 
-gcc: yacc flex
-	gcc -o aula8 y.tab.c lex.yy.c -ly -ll -w
+gcc: lib yacc flex
+	gcc -o aula8 call_parser.c y.tab.c lex.yy.c serverlib.o -ly -ll -w
