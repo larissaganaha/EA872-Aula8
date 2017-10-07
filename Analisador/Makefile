@@ -1,7 +1,7 @@
 all: gcc lib yacc flex
 
 lib: serverlib.c
-	gcc -o serverlib.o -c serverlib.c
+	gcc -o serverlib.o -c serverlib.c -w
 
 yacc: aula8.y
 	yacc -d aula8.y

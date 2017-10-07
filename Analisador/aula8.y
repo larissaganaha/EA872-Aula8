@@ -12,7 +12,6 @@
 
     #define CHUNK 1024
     #define ADDRESS_SIZE 500
-
     //cores de print
     #define RED   "\x1B[31m"
     #define GRN   "\x1B[32m"
@@ -24,20 +23,18 @@
     #define RESET "\x1B[0m"
 
     command_list *add_command_list(char *command);
+    command_list *symtab_get_parse_result();
+    void add_param_list_begin(char *param);
+    void print_list();
 
     struct command_list * list = NULL;
     struct command_list * requisicao = NULL;
-
     //flags de controle
     int comando_detectado = 0;
     int nLinha = 0;
     char comandoTxt[200];
     char paramTxt[200];
     char frase[200];
-
-    int quebra_linha = 0;
-
-
     %}
 
 %union {
@@ -52,84 +49,64 @@
 %%
 
 linhas  :   linhas linha
-| linha
+        |   linha
 
 
 linha   :   comando parametro_final {nLinha++;
-    quebra_linha = 0;
-    comando_detectado = 0;}
-| comando NL    {nLinha++;
-    quebra_linha = 0;
-    comando_detectado = 0;}
-| comando_HTTP NL {nLinha++;
-    quebra_linha = 0;
-    comando_detectado = 0;}
-| comando_sp NL {add_param_list_begin(&frase);
-    nLinha++;
-    quebra_linha = 0;
-    comando_detectado = 0;
-}
-| erro      {nLinha++;
-    quebra_linha = 0;
-    comando_detectado = 0;
-    fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido.\n" RESET, nLinha);}
-| FIM_REQ        {nLinha++;
-        //printf("--------Tratando %s -------\n", requisicao->command);
-        getOutput(requisicao);
-        comando_detectado = 0;}
+                                    comando_detectado = 0;}
+            | comando NL            {nLinha++;
+                                    comando_detectado = 0;}
+            | comando_HTTP NL       {nLinha++;
+                                    comando_detectado = 0;}
+            | comando_sp NL         {add_param_list_begin(&frase);
+                                    nLinha++;
+                                    comando_detectado = 0;}
+            | erro                  {nLinha++;
+                                    comando_detectado = 0;
+                                    fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido.\n" RESET, nLinha);}
+            | FIM_REQ               {nLinha++;
+                                    comando_detectado = 0;}
 
-comando_HTTP : COMANDO_HTTP {
-    strcpy(comandoTxt, $1);
-    requisicao = add_command_list(&comandoTxt);
-    //printf("--------Requisicao %s encontrada, coletando parametros-------\n", requisicao->command);
+comando_HTTP : COMANDO_HTTP         {strcpy(comandoTxt, $1);
+                                    requisicao = add_command_list(&comandoTxt);}
+            | comando_HTTP PARAMETRO_SP {strcpy(paramTxt, $2);
+                                    add_param_list_begin(&paramTxt);}
 
-}
-| comando_HTTP PARAMETRO_SP{
-    strcpy(paramTxt, $2);
-    add_param_list_begin(&paramTxt);
-}
+comando_sp : COMANDO                {frase[0] = '\0';
+                                    strcpy(comandoTxt, $1);
+                                    add_command_list(&comandoTxt);}
+            |comando_sp VIRGULA     {strcat(frase, ",");}
+            |comando_sp DP          {strcat(frase, ":");}
+            |comando_sp palavra     {strcat(frase, " ");
+                                    strcat(frase, $2);}
 
-comando_sp : COMANDO   {frase[0] = '\0';
-    strcpy(comandoTxt, $1);
-    add_command_list(&comandoTxt);}
-|comando_sp VIRGULA {strcat(frase, ",");}
-|comando_sp DP      {strcat(frase, ":");}
-|comando_sp palavra {strcat(frase, " ");
-    strcat(frase, $2);}
-
-comando : palavra DP {comando_detectado = 1;
-    strcpy(comandoTxt, $1);
-    add_command_list(&comandoTxt);}
+comando : palavra DP                {comando_detectado = 1;
+                                    strcpy(comandoTxt, $1);
+                                    add_command_list(&comandoTxt);}
 
 erro    :  DP parametro_final
-|  DP NL
+        |  DP NL
 
 
 parametro_final :   parametros parametro_NL
-|   parametro_NL
+                |   parametro_NL
 
 parametros  :   parametro
-|   parametros parametro
+            |   parametros parametro
 
-parametro_NL: palavra NL   { if(comando_detectado){
-    strcpy(paramTxt, $1);
-    add_param_list_begin(&paramTxt);
-}
-};
+parametro_NL: palavra NL            { if(comando_detectado){
+                                        strcpy(paramTxt, $1);
+                                        add_param_list_begin(&paramTxt);
+                                    }};
 
-parametro: palavra VIRGULA { if(comando_detectado){
-    strcpy(paramTxt, $1);
-    add_param_list_begin(&paramTxt);
-}
-};
+parametro: palavra VIRGULA          { if(comando_detectado){
+                                        strcpy(paramTxt, $1);
+                                        add_param_list_begin(&paramTxt);
+                                    }};
 
 palavra : PALAVRA
 
-
 %%
-
-
-
 
 
 void print_list() {

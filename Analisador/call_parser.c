@@ -32,6 +32,7 @@ int main(int argc, char** argv)
 
 	/* Funcao para obter resultado do parser */
 	result = symtab_get_parse_result();
+	getOutput(result);
 
 	/* Fechando o arquivo... */
 	close(fin);

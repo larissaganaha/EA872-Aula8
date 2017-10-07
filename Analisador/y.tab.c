@@ -76,7 +76,6 @@
 
     #define CHUNK 1024
     #define ADDRESS_SIZE 500
-
     //cores de print
     #define RED   "\x1B[31m"
     #define GRN   "\x1B[32m"
@@ -88,23 +87,21 @@
     #define RESET "\x1B[0m"
 
     command_list *add_command_list(char *command);
+    command_list *symtab_get_parse_result();
+    void add_param_list_begin(char *param);
+    void print_list();
 
     struct command_list * list = NULL;
     struct command_list * requisicao = NULL;
-
     //flags de controle
     int comando_detectado = 0;
     int nLinha = 0;
     char comandoTxt[200];
     char paramTxt[200];
     char frase[200];
-
-    int quebra_linha = 0;
-
-
     
 
-#line 108 "y.tab.c" /* yacc.c:339  */
+#line 105 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -168,11 +165,11 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 43 "aula8.y" /* yacc.c:355  */
+#line 40 "aula8.y" /* yacc.c:355  */
 
     char str[200];
 
-#line 176 "y.tab.c" /* yacc.c:355  */
+#line 173 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -189,7 +186,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 193 "y.tab.c" /* yacc.c:358  */
+#line 190 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -487,9 +484,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    54,    54,    55,    58,    61,    64,    67,    72,    76,
-      81,    87,    92,    95,    96,    97,   100,   104,   105,   108,
-     109,   111,   112,   114,   120,   126
+       0,    51,    51,    52,    55,    57,    59,    61,    64,    67,
+      70,    72,    75,    78,    79,    80,    83,    87,    88,    91,
+      92,    94,    95,    97,   102,   107
 };
 #endif
 
@@ -1280,134 +1277,118 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 58 "aula8.y" /* yacc.c:1646  */
+#line 55 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
-    quebra_linha = 0;
-    comando_detectado = 0;}
-#line 1288 "y.tab.c" /* yacc.c:1646  */
+                                    comando_detectado = 0;}
+#line 1284 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 61 "aula8.y" /* yacc.c:1646  */
+#line 57 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
-    quebra_linha = 0;
-    comando_detectado = 0;}
-#line 1296 "y.tab.c" /* yacc.c:1646  */
+                                    comando_detectado = 0;}
+#line 1291 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 64 "aula8.y" /* yacc.c:1646  */
+#line 59 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
-    quebra_linha = 0;
-    comando_detectado = 0;}
-#line 1304 "y.tab.c" /* yacc.c:1646  */
+                                    comando_detectado = 0;}
+#line 1298 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 67 "aula8.y" /* yacc.c:1646  */
+#line 61 "aula8.y" /* yacc.c:1646  */
     {add_param_list_begin(&frase);
-    nLinha++;
-    quebra_linha = 0;
-    comando_detectado = 0;
-}
-#line 1314 "y.tab.c" /* yacc.c:1646  */
+                                    nLinha++;
+                                    comando_detectado = 0;}
+#line 1306 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 72 "aula8.y" /* yacc.c:1646  */
+#line 64 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
-    quebra_linha = 0;
-    comando_detectado = 0;
-    fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido.\n" RESET, nLinha);}
-#line 1323 "y.tab.c" /* yacc.c:1646  */
+                                    comando_detectado = 0;
+                                    fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido.\n" RESET, nLinha);}
+#line 1314 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 76 "aula8.y" /* yacc.c:1646  */
+#line 67 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
-        //printf("--------Tratando %s -------\n", requisicao->command);
-        getOutput(requisicao);
-        comando_detectado = 0;}
-#line 1332 "y.tab.c" /* yacc.c:1646  */
+                                    comando_detectado = 0;}
+#line 1321 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 81 "aula8.y" /* yacc.c:1646  */
-    {
-    strcpy(comandoTxt, (yyvsp[0].str));
-    requisicao = add_command_list(&comandoTxt);
-    //printf("--------Requisicao %s encontrada, coletando parametros-------\n", requisicao->command);
-
-}
-#line 1343 "y.tab.c" /* yacc.c:1646  */
+#line 70 "aula8.y" /* yacc.c:1646  */
+    {strcpy(comandoTxt, (yyvsp[0].str));
+                                    requisicao = add_command_list(&comandoTxt);}
+#line 1328 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 87 "aula8.y" /* yacc.c:1646  */
-    {
-    strcpy(paramTxt, (yyvsp[0].str));
-    add_param_list_begin(&paramTxt);
-}
-#line 1352 "y.tab.c" /* yacc.c:1646  */
+#line 72 "aula8.y" /* yacc.c:1646  */
+    {strcpy(paramTxt, (yyvsp[0].str));
+                                    add_param_list_begin(&paramTxt);}
+#line 1335 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 92 "aula8.y" /* yacc.c:1646  */
+#line 75 "aula8.y" /* yacc.c:1646  */
     {frase[0] = '\0';
-    strcpy(comandoTxt, (yyvsp[0].str));
-    add_command_list(&comandoTxt);}
-#line 1360 "y.tab.c" /* yacc.c:1646  */
+                                    strcpy(comandoTxt, (yyvsp[0].str));
+                                    add_command_list(&comandoTxt);}
+#line 1343 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 95 "aula8.y" /* yacc.c:1646  */
+#line 78 "aula8.y" /* yacc.c:1646  */
     {strcat(frase, ",");}
-#line 1366 "y.tab.c" /* yacc.c:1646  */
+#line 1349 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 96 "aula8.y" /* yacc.c:1646  */
+#line 79 "aula8.y" /* yacc.c:1646  */
     {strcat(frase, ":");}
-#line 1372 "y.tab.c" /* yacc.c:1646  */
+#line 1355 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 97 "aula8.y" /* yacc.c:1646  */
+#line 80 "aula8.y" /* yacc.c:1646  */
     {strcat(frase, " ");
-    strcat(frase, (yyvsp[0].str));}
-#line 1379 "y.tab.c" /* yacc.c:1646  */
+                                    strcat(frase, (yyvsp[0].str));}
+#line 1362 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 100 "aula8.y" /* yacc.c:1646  */
+#line 83 "aula8.y" /* yacc.c:1646  */
     {comando_detectado = 1;
-    strcpy(comandoTxt, (yyvsp[-1].str));
-    add_command_list(&comandoTxt);}
-#line 1387 "y.tab.c" /* yacc.c:1646  */
+                                    strcpy(comandoTxt, (yyvsp[-1].str));
+                                    add_command_list(&comandoTxt);}
+#line 1370 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 114 "aula8.y" /* yacc.c:1646  */
+#line 97 "aula8.y" /* yacc.c:1646  */
     { if(comando_detectado){
-    strcpy(paramTxt, (yyvsp[-1].str));
-    add_param_list_begin(&paramTxt);
-}
-}
-#line 1397 "y.tab.c" /* yacc.c:1646  */
+                                        strcpy(paramTxt, (yyvsp[-1].str));
+                                        add_param_list_begin(&paramTxt);
+                                    }}
+#line 1379 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 120 "aula8.y" /* yacc.c:1646  */
+#line 102 "aula8.y" /* yacc.c:1646  */
     { if(comando_detectado){
-    strcpy(paramTxt, (yyvsp[-1].str));
-    add_param_list_begin(&paramTxt);
-}
-}
-#line 1407 "y.tab.c" /* yacc.c:1646  */
+                                        strcpy(paramTxt, (yyvsp[-1].str));
+                                        add_param_list_begin(&paramTxt);
+                                    }}
+#line 1388 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1411 "y.tab.c" /* yacc.c:1646  */
+#line 1392 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1635,10 +1616,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 129 "aula8.y" /* yacc.c:1906  */
-
-
-
+#line 109 "aula8.y" /* yacc.c:1906  */
 
 
 
