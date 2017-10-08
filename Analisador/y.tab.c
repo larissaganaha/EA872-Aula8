@@ -1309,7 +1309,7 @@ yyreduce:
 #line 64 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
                                     comando_detectado = 0;
-                                    fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido.\n" RESET, nLinha);}
+                                    fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido. \n" RESET, nLinha);}
 #line 1314 "y.tab.c" /* yacc.c:1646  */
     break;
 

@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 	char *req;
 	struct command_list * result = NULL;
 
-	printf("\nStarting program to call the parser and process a request...\n\n");
+	printf("\nStarting program to call the parser and process a request... \n\n");
 	FILE * fin;
 
 	/* argv[1] -> Arquivo contendo a requisicao */

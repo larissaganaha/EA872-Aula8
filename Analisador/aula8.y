@@ -63,7 +63,7 @@ linha   :   comando parametro_final {nLinha++;
                                     comando_detectado = 0;}
             | erro                  {nLinha++;
                                     comando_detectado = 0;
-                                    fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido.\n" RESET, nLinha);}
+                                    fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido. \n" RESET, nLinha);}
             | FIM_REQ               {nLinha++;
                                     comando_detectado = 0;}
 

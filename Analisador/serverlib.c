@@ -21,7 +21,7 @@ void getCabecalho(char *local, command_list * requisicao){
     strcpy(address, ".");
     strcat(address, local);
 
-    //printf("˜˜˜˜˜˜˜˜˜~addresss ˜˜˜˜˜˜˜˜˜~\n");
+    //printf("˜˜˜˜˜˜˜˜~addresss ˜˜˜˜˜˜˜˜~\n");
     //printf(address);
     printf("\n");
 

@@ -1,3 +1,4 @@
+#Makefile
 all: gcc lib yacc flex
 
 lib: serverlib.c
