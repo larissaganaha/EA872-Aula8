@@ -108,6 +108,10 @@ palavra : PALAVRA
 
 %%
 
+//funcao apenas para suprimir o print "syntax error"
+void yyerror(){
+    return;
+}
 
 void print_list() {
     command_list * current = list;

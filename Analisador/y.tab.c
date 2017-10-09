@@ -1619,6 +1619,10 @@ yyreturn:
 #line 109 "aula8.y" /* yacc.c:1906  */
 
 
+//funcao apenas para suprimir o print "syntax error"
+void yyerror(){
+    return;
+}
 
 void print_list() {
     command_list * current = list;

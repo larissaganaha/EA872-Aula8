@@ -28,7 +28,11 @@ int main(int argc, char** argv)
 
 	/* Processando a requisicao no buffer "req" usando o parser */
 	yy_scan_string(req);
-	yyparse();
+	if( yyparse() ){
+		//requisicao esta mal formada
+		getOutput(NULL);
+		return 0;
+	}
 
 	/* Funcao para obter resultado do parser */
 	result = symtab_get_parse_result();

@@ -28,6 +28,18 @@
         return (COMANDO_HTTP);
         }
 
+^POST	       {BEGIN comandoSpec;
+				sscanf(yytext, "%s", &yylval.str);
+        return (COMANDO_HTTP);
+        }
+
+^PUT			{BEGIN comandoSpec;
+				sscanf(yytext, "%s", &yylval.str);
+        return (COMANDO_HTTP);
+        }
+
+
+
 <comandoSpec>[a-zA-Z0-9_Ç-Û;/+.=*()-]+	{
               	sscanf(yytext, "%s", &yylval.str);
   				return (PARAMETRO_SP);
