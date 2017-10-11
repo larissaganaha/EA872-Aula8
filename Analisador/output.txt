@@ -1,0 +1,33 @@
+
+HTTP/1.1  	200 OK
+Date: 		Mon Oct  9 23:27:12 2017 BRT
+Server: 	Servidor HTTP ver. 0.2 Grupo 7
+Last-Modified: 	Fri Sep 29 14:48:05 2017 BRT
+Accept-Ranges: 	bytes
+Content-Length: 356 bytes
+Vary: 		Accept-Encoding
+Content-Type: 	text/html
+Connection: 	keep-alive
+
+<html>
+  <head>
+  <title>       </title>
+  <style type="text/css">
+  <!--
+  h1	{text-align:center;
+    font-family:Arial, Helvetica, Sans-Serif;
+    }
+  
+  p	{text-indent:20px;
+    }
+  -->
+  </style>
+  </head>
+  <body bgcolor = "#ffffcc" text = "#000000">
+  <h1>TEXTO2.HTML !</h1>
+  
+  <P> THIS IS A GENERIC HTML TEXTO2 PAGE <P>
+  
+  </body>
+  </html>
+    

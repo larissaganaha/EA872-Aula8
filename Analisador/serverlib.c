@@ -13,7 +13,7 @@ char *formatdate(char *buff, time_t val){
     return buff;
 }
 
-void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo){
+void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, FILE * fout){
     char address[200];
     char date[100];
     struct stat fileStat;
@@ -37,163 +37,163 @@ void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo){
       //temos um cabecalho de erro
       switch (tipo) {
         case BAD_REQUEST:
-          printf("HTTP/1.1 \t400 Bad Request\n");
-          printf("Date: \t\t%s\n",buffer);
-          printf("Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
-          printf("Content-Length: 219\n");
-          printf("Connection: \tclose\n");
-          printf("Content-Type: \ttext/html\n");
+          fprintf(fout,"HTTP/1.1 \t400 Bad Request\n");
+          fprintf(fout,"Date: \t\t%s\n",buffer);
+          fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
+          fprintf(fout,"Content-Length: 219\n");
+          fprintf(fout,"Connection: \tclose\n");
+          fprintf(fout,"Content-Type: \ttext/html\n");
           break;
         case FORBIDDEN:
-          printf("%s ", requisicao->params->param); //http/1.1
-          printf("403 Forbidden\n");
-          printf("Date: \t\t%s\n",buffer);
-          printf("Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
-          printf("Content-Length: 203\n");
-          printf("Content-Type: \ttext/html\n");
+          fprintf(fout,"%s ", requisicao->params->param); //http/1.1
+          fprintf(fout,"403 Forbidden\n");
+          fprintf(fout,"Date: \t\t%s\n",buffer);
+          fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
+          fprintf(fout,"Content-Length: 203\n");
+          fprintf(fout,"Content-Type: \ttext/html\n");
           break;
         case NOT_FOUND:
-          printf("%s ", requisicao->params->param); //http/1.1
-          printf("404 Not Found\n");
-          printf("Date: \t\t%s\n",buffer);
-          printf("Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
-          printf("Content-Length: 200\n");
-          printf("Content-Type: \ttext/html\n");
+          fprintf(fout,"%s ", requisicao->params->param); //http/1.1
+          fprintf(fout,"404 Not Found\n");
+          fprintf(fout,"Date: \t\t%s\n",buffer);
+          fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
+          fprintf(fout,"Content-Length: 200\n");
+          fprintf(fout,"Content-Type: \ttext/html\n");
           break;
         case NOT_ALLOWED:
-          printf("%s ", requisicao->params->param); //http/1.1
-          printf("405 Method Not Allowed\n");
-          printf("Date: \t\t%s\n",buffer);
-          printf("Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
-          printf("Allow: \t\tGET, HEAD, TRACE, OPTIONS\n");
-          printf("Content-Length: 212\n");
-          printf("Content-Type: \ttext/html\n");
+          fprintf(fout,"%s ", requisicao->params->param); //http/1.1
+          fprintf(fout,"405 Method Not Allowed\n");
+          fprintf(fout,"Date: \t\t%s\n",buffer);
+          fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
+          fprintf(fout,"Allow: \t\tGET, HEAD, TRACE, OPTIONS\n");
+          fprintf(fout,"Content-Length: 212\n");
+          fprintf(fout,"Content-Type: \ttext/html\n");
           break;
         case INTERNAL_ERROR:
-          printf("%s ", requisicao->params->param); //http/1.1
-          printf("500 Internal Server Error\n");
-          printf("Date: \t\t%s\n",buffer);
-          printf("Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
-          printf("Content-Length: 214\n");
-          printf("Content-Type: \ttext/html\n");
+          fprintf(fout,"%s ", requisicao->params->param); //http/1.1
+          fprintf(fout,"500 Internal Server Error\n");
+          fprintf(fout,"Date: \t\t%s\n",buffer);
+          fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
+          fprintf(fout,"Content-Length: 214\n");
+          fprintf(fout,"Content-Type: \ttext/html\n");
           break;
         case NOT_IMPLEMENTED:
-          printf("%s ", requisicao->params->param); //http/1.1
-          printf("501 Not Implemented\n");
-          printf("Date: \t\t%s\n",buffer);
-          printf("Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
-          printf("Content-Length: 206\n");
-          printf("Content-Type: \ttext/html\n");
+          fprintf(fout,"%s ", requisicao->params->param); //http/1.1
+          fprintf(fout,"501 Not Implemented\n");
+          fprintf(fout,"Date: \t\t%s\n",buffer);
+          fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
+          fprintf(fout,"Content-Length: 206\n");
+          fprintf(fout,"Content-Type: \ttext/html\n");
           break;
       }
     }
     //temos um cabecalho de requisicao satisfeita
     else{
       //tenta abrir o arquivo
-      if((file = open(address, O_RDONLY)) < 0){printf("--\n**SHOULD NOT ENTER HERE1**Couldn't open file: %s\n--\n",address);
+      if((file = open(address, O_RDONLY)) < 0){fprintf(stderr,"--\n**SHOULD NOT ENTER HERE1**Couldn't open file: %s\n--\n",address);
           return;
       }
-      if(fstat(file,&fileStat) < 0) {printf("**SHOULD NOT ENTER HERE2**\n");return;}
+      if(fstat(file,&fileStat) < 0) {fprintf(stderr,"**SHOULD NOT ENTER HERE2**\n");return;}
 
-      printf("%s ", requisicao->params->param); //http/1.1
+      fprintf(fout,"%s ", requisicao->params->param); //http/1.1
       switch (tipo) {
         case GET:
-          printf(" \t200 OK\n");
-          printf("Date: \t\t%s\n",buffer);
-          printf("Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
-          printf("Last-Modified: \t%s\n", formatdate(date, fileStat.st_mtime));
-          printf("Accept-Ranges: \tbytes\n");
-          printf("Content-Length: %d bytes\n",fileStat.st_size); //ESSE NAO EH O LENGTH CORRETO, MAS POR HORA VAMOS DEIXAR ASSIM
-          printf("Vary: \t\tAccept-Encoding\n");
-          printf("Content-Type: \ttext/html\n");
+          fprintf(fout," \t200 OK\n");
+          fprintf(fout,"Date: \t\t%s\n",buffer);
+          fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
+          fprintf(fout,"Last-Modified: \t%s\n", formatdate(date, fileStat.st_mtime));
+          fprintf(fout,"Accept-Ranges: \tbytes\n");
+          fprintf(fout,"Content-Length: %d bytes\n",fileStat.st_size); //ESSE NAO EH O LENGTH CORRETO, MAS POR HORA VAMOS DEIXAR ASSIM
+          fprintf(fout,"Vary: \t\tAccept-Encoding\n");
+          fprintf(fout,"Content-Type: \ttext/html\n");
           if(findParam(requisicao, "Connection"))
-              printf("Connection: \t%s\n", findParam(requisicao, "Connection")->params->param);
+              fprintf(fout,"Connection: \t%s\n", findParam(requisicao, "Connection")->params->param);
           break;
         case HEAD:
-          printf(" \t200 OK\n");
-          printf("Date: \t\t%s\n",buffer);
-          printf("Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
-          printf("Last-Modified: \t%s\n", formatdate(date, fileStat.st_mtime));
-          printf("Accept-Ranges: \tbytes\n");
-          printf("Content-Length: %d bytes\n",fileStat.st_size); //ESSE NAO EH O LENGTH CORRETO, MAS POR HORA VAMOS DEIXAR ASSIM
-          printf("Vary: \t\tAccept-Encoding\n");
-          printf("Content-Type: \ttext/html\n");
+          fprintf(fout," \t200 OK\n");
+          fprintf(fout,"Date: \t\t%s\n",buffer);
+          fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
+          fprintf(fout,"Last-Modified: \t%s\n", formatdate(date, fileStat.st_mtime));
+          fprintf(fout,"Accept-Ranges: \tbytes\n");
+          fprintf(fout,"Content-Length: %d bytes\n",fileStat.st_size); //ESSE NAO EH O LENGTH CORRETO, MAS POR HORA VAMOS DEIXAR ASSIM
+          fprintf(fout,"Vary: \t\tAccept-Encoding\n");
+          fprintf(fout,"Content-Type: \ttext/html\n");
           if(findParam(requisicao, "Connection"))
-              printf("Connection: \t%s\n", findParam(requisicao, "Connection")->params->param);
+              fprintf(fout,"Connection: \t%s\n", findParam(requisicao, "Connection")->params->param);
           break;
         case TRACE:
-          printf(" \t200 OK\n");
-          printf("Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
-          printf("Date: \t\t%s\n",buffer);
+          fprintf(fout," \t200 OK\n");
+          fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
+          fprintf(fout,"Date: \t\t%s\n",buffer);
           if(findParam(requisicao, "Connection"))
-              printf("Connection: \t%s\n", findParam(requisicao, "Connection")->params->param);
-          printf("Content-Type: \ttext/html\n");
-          printf("Content-Length: %d bytes\n",fileStat.st_size); //ESSE NAO EH O LENGTH CORRETO, MAS POR HORA VAMOS DEIXAR ASSIM
+              fprintf(fout,"Connection: \t%s\n", findParam(requisicao, "Connection")->params->param);
+          fprintf(fout,"Content-Type: \ttext/html\n");
+          fprintf(fout,"Content-Length: %d bytes\n",fileStat.st_size); //ESSE NAO EH O LENGTH CORRETO, MAS POR HORA VAMOS DEIXAR ASSIM
           break;
         case OPTIONS:
-          printf(" \t200 OK\n");
-          printf("Date: \t\t%s\n",buffer);
-          printf("Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
-          printf("Allow: \t\tGET, HEAD, TRACE, OPTIONS\n");
-          printf("Content-Length: 0\n");
-          printf("Content-Type: \ttext/html\n");
+          fprintf(fout," \t200 OK\n");
+          fprintf(fout,"Date: \t\t%s\n",buffer);
+          fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
+          fprintf(fout,"Allow: \t\tGET, HEAD, TRACE, OPTIONS\n");
+          fprintf(fout,"Content-Length: 0\n");
+          fprintf(fout,"Content-Type: \ttext/html\n");
           break;
 
       }
-      printf("\n");
+      fprintf(fout,"\n");
     }
     return;
 }
 
 
 
-void getOutput(command_list * requisicao){
+void getOutput(command_list * requisicao, FILE * fout){
     struct stat fileStat;
     char address[ADDRESS_SIZE];
     //caso BAD_REQUEST
     if(requisicao == NULL){
-      getCabecalho(NULL, NULL, BAD_REQUEST);
-      printf("\n\n");
-      erro(BAD_REQUEST);
+      getCabecalho(NULL, NULL, BAD_REQUEST, fout);
+      fprintf(fout,"\n\n");
+      erro(BAD_REQUEST, fout);
     }
     //caso BAD_REQUEST por falta de Host (por enquanto pode ser qualquer host)
     else if(!(findParam(requisicao, "Host")) ){
-      getCabecalho(NULL, NULL, BAD_REQUEST);
-      printf("\n\n");
-      erro(BAD_REQUEST);
+      getCabecalho(NULL, NULL, BAD_REQUEST, fout);
+      fprintf(fout,"\n\n");
+      erro(BAD_REQUEST, fout);
     }
     //caso FORBIDDEN
-    else if (get_access(requisicao->params->next->param, 0) == FORBIDDEN) {
-      getCabecalho(requisicao->params->next->param, requisicao, FORBIDDEN);
-      printf("\n\n");
-      erro(FORBIDDEN);
+    else if (get_access(requisicao->params->next->param, 0, fout) == FORBIDDEN) {
+      getCabecalho(requisicao->params->next->param, requisicao, FORBIDDEN, fout);
+      fprintf(fout,"\n\n");
+      erro(FORBIDDEN, fout);
     }
     //caso NOT_FOUND
-    else if (get_access(requisicao->params->next->param, 0) == NOT_FOUND) {
-      getCabecalho(requisicao->params->next->param, requisicao, NOT_FOUND);
-      printf("\n\n");
-      erro(NOT_FOUND);
+    else if (get_access(requisicao->params->next->param, 0, fout) == NOT_FOUND) {
+      getCabecalho(requisicao->params->next->param, requisicao, NOT_FOUND, fout);
+      fprintf(fout,"\n\n");
+      erro(NOT_FOUND, fout);
     }
     //caso GET
     else if (strcmp(requisicao->command, "GET") == 0){
-        printf("\n");
-        getCabecalho(requisicao->params->next->param, requisicao, GET); //imprime o cabecalho
-        get_access(requisicao->params->next->param, 1);   //imprime o HTML
+        fprintf(fout,"\n");
+        getCabecalho(requisicao->params->next->param, requisicao, GET, fout); //imprime o cabecalho
+        get_access(requisicao->params->next->param, 1, fout);   //imprime o HTML
     }
     else if(strcmp(requisicao->command, "HEAD") == 0){
-        getCabecalho(requisicao->params->next->param, requisicao, HEAD); //imprime o cabecalho
+        getCabecalho(requisicao->params->next->param, requisicao, HEAD, fout); //imprime o cabecalho
     }
     else if(strcmp(requisicao->command, "TRACE") == 0){
-        getCabecalho(requisicao->params->next->param, requisicao, TRACE); //imprime o cabecalho
+        getCabecalho(requisicao->params->next->param, requisicao, TRACE, fout); //imprime o cabecalho
     }
     else if(strcmp(requisicao->command, "OPTIONS") == 0){
-        getCabecalho(requisicao->params->next->param, requisicao, OPTIONS); //imprime o cabecalho
+        getCabecalho(requisicao->params->next->param, requisicao, OPTIONS, fout); //imprime o cabecalho
     }
     else{
       //not allowed
-      getCabecalho(requisicao->params->next->param, requisicao, NOT_ALLOWED);
-      printf("\n\n");
-      erro(NOT_ALLOWED);
+      getCabecalho(requisicao->params->next->param, requisicao, NOT_ALLOWED, fout);
+      fprintf(fout,"\n\n");
+      erro(NOT_ALLOWED, fout);
     }
     return;
 }
@@ -203,12 +203,12 @@ void getOutput(command_list * requisicao){
  0 = nao ha permissao de leitura
  1 = o arquivo foi impresso corretamente
  */
-int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat){
+int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat, FILE * fout){
     int file, size;
     char  buf[CHUNK];
     //verifica permissao de leitura
     if( !(fileStat.st_mode & S_IRUSR) ){
-        erro(1); //forbidden
+        erro(FORBIDDEN, fout); //forbidden
         return 0;
     }
 
@@ -218,9 +218,10 @@ int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat){
         exit(0);
     }
 
-    //le e escreve o arquivo na saida padrao
+    //le e escreve o arquivo no fout
     while( (size =  read(file, buf, sizeof(buf))) > 0 ){
-        if(write( 1, buf, size) < 0){
+        buf[size] = '\0';
+        if(fprintf( fout, buf) < 0){
             fprintf(stderr, "Erro na escrita de %s.\n", address);
             exit(0);
         }
@@ -229,7 +230,7 @@ int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat){
 }
 
 //Acessa o recurso com o get para verificar o arquivo e possivelmente imprimi-lo
-tipo_cabecalho get_access(char *local , int imprimir) {
+tipo_cabecalho get_access(char *local , int imprimir, FILE * fout) {
     char address[ADDRESS_SIZE], temp_address[ADDRESS_SIZE];
     char *buffer;
     struct stat fileStat;
@@ -259,7 +260,7 @@ tipo_cabecalho get_access(char *local , int imprimir) {
             if(stat(temp_address,&fileStat) >= 0){
               //gambiarra extrema to com sono
               if( (fileStat.st_mode & S_IRUSR) ){
-                  if(imprimir) escreveArquivo(temp_address, fileStat);
+                  if(imprimir) escreveArquivo(temp_address, fileStat, fout);
                   return 0;
               }
                 aux = 1; //index nao tem permissao de leitura
@@ -276,7 +277,7 @@ tipo_cabecalho get_access(char *local , int imprimir) {
             if(stat(temp_address,&fileStat) >= 0){
               //gambiarra extrema to com sono
               if( (fileStat.st_mode & S_IRUSR) ){
-                  if(imprimir) escreveArquivo(temp_address, fileStat);
+                  if(imprimir) escreveArquivo(temp_address, fileStat, fout);
                   return 0;
               }
                 return FORBIDDEN;
@@ -296,7 +297,7 @@ tipo_cabecalho get_access(char *local , int imprimir) {
     }
     //se o recurso eh um arquivo
     else {
-        if(imprimir) escreveArquivo(address, fileStat);
+        if(imprimir) escreveArquivo(address, fileStat, fout);
     }
     return 0;
 }
@@ -315,7 +316,7 @@ command_list * findParam(command_list * requisicao, char * param){
     return NULL;
 }
 
-void erro(tipo_cabecalho tipo){
+void erro(tipo_cabecalho tipo,FILE * fout){
   char title[50], h1[50], paragraph[200];
 
   switch (tipo) {
@@ -356,7 +357,7 @@ void erro(tipo_cabecalho tipo){
       break;
   }
 
-  printf("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>%s</title>\n</head><body>\n<h1>%s</h1>\n", title, h1);
-  printf("<p>%s\n</p>\n</body></html>\n\n", paragraph);
+  fprintf(fout,"<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>%s</title>\n</head><body>\n<h1>%s</h1>\n", title, h1);
+  fprintf(fout,"<p>%s\n</p>\n</body></html>\n\n", paragraph);
   return;
 }
