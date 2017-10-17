@@ -105,6 +105,8 @@ char **arg_valor;
     yy_scan_string(area);
       
     printf("Starting program to call the parser and process a request... \n");
+    
+    printf(area);
 
       
     if((fout = fopen("tmpOut.txt", "w+")) == NULL){
@@ -146,6 +148,7 @@ char **arg_valor;
     if (buffer)
     {
       buffer[length]='\0';
+      printf(buffer);
     }
    
     send(novo_soquete, buffer, strlen(buffer), 0);    

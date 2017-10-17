@@ -117,6 +117,7 @@ void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, F
       
       get_access(requisicao->params->next->param, 0, NULL, endereco);
       tamanho = getSize(endereco);
+      printf("-------E1: %s -----------E2: %s --------------tam: %d -------\n",requisicao->params->next->param, endereco, tamanho);
 
       fprintf(fout,"%s ", requisicao->params->param); //http/1.1
       switch (tipo) {
@@ -322,7 +323,7 @@ tipo_cabecalho get_access(char *local , int imprimir, FILE * fout, char *enderec
     }
     //se o recurso eh um arquivo
     else {
-	if(endereco) strcpy(endereco, temp_address);
+	if(endereco) strcpy(endereco, address);
         if(imprimir) escreveArquivo(address, fileStat, fout);
     }
     return 0;

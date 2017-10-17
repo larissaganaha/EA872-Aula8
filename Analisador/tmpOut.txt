@@ -1,35 +1,34 @@
 
 HTTP/1.1  	200 OK
-Date: 		Tue Oct 17 20:09:40 2017 BRST
+Date: 		Tue Oct 17 20:47:02 2017 BRST
 Server: 	Servidor HTTP ver. 0.2 Grupo 7
-Last-Modified: 	Tue Sep 26 12:57:49 2017 BRT
+Last-Modified: 	Tue Oct 17 20:28:29 2017 BRST
 Accept-Ranges: 	bytes
-Content-Length: 0 bytes
+Content-Length: 380 bytes
 Vary: 		Accept-Encoding
 Content-Type: 	text/html
 Connection: 	keep-alive
 
 <html>
-<head>
-<title>       </title>
-<style type="text/css">
-<!--
-h1	{text-align:center;
-	font-family:Arial, Helvetica, Sans-Serif;
-	}
-
-p	{text-indent:20px;
-	}
--->
-</style>
-</head>
-<body bgcolor = "#05A2C7" text = "#000000">
-<h1>WELCOME.HTML !</h1>
-
-<P> THIS IS ANOTHER GENERIC HTML PAGE <P>
-
-<p>WELCOME WELCOME WELMCOME WELCOME WELCOME</p>
-
-</body>
-</html>
-	
+  <head>
+  <title>       </title>
+  <style type="text/css">
+  <!--
+  h1	{text-align:left;
+    font-family:Arial, Helvetica, Sans-Serif;
+    }
+  
+  p	{text-indent:20px;
+    }
+  -->
+  </style>
+  </head>
+  <body bgcolor = "#cb1eea" text = "#000000">
+  <h1>TEXTO1.HTML !</h1>
+  
+  <P> THIS IS A GENERIC HTML TEXTO1 PAGE </P>
+  <P> INSIDE ./dir1 </P>
+  
+  </body>
+  </html>
+    
