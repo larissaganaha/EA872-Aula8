@@ -18,6 +18,6 @@ char *formatdate(char *buff, time_t val);
 void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, FILE * fout);
 void getOutput(command_list * requisicao, FILE * fout);
 int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat, FILE * fout);
-tipo_cabecalho get_access(char *local , int imprimir, FILE * fout);
+tipo_cabecalho get_access(char *local , int imprimir, FILE * fout, char *endereco);
 command_list * findParam(command_list * requisicao, char * param);
 void erro(tipo_cabecalho tipo, FILE * fout);

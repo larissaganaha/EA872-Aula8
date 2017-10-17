@@ -13,6 +13,24 @@ char *formatdate(char *buff, time_t val){
     return buff;
 }
 
+int getSize(char *endereco){
+    char * buffer = 0;
+    long length;
+    FILE * f = fopen (endereco, "rb");
+
+    if (f){
+      fseek (f, 0, SEEK_END);
+      length = ftell (f);
+      fseek (f, 0, SEEK_SET);
+      buffer = malloc (length);
+      if (buffer) {
+	return fread (buffer, 1, length, f);
+      }
+      fclose (f);
+    }
+    return 0;
+}
+
 void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, FILE * fout){
     char address[200];
     char date[100];
@@ -22,6 +40,8 @@ void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, F
     struct timeval tv;
     time_t curtime;
     int file;
+    char endereco[1024];
+    int tamanho;
 
     //obtem data e hora
     gettimeofday(&tv, NULL);
@@ -94,6 +114,9 @@ void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, F
           return;
       }
       if(fstat(file,&fileStat) < 0) {fprintf(stderr,"**SHOULD NOT ENTER HERE2**\n");return;}
+      
+      get_access(requisicao->params->next->param, 0, NULL, endereco);
+      tamanho = getSize(endereco);
 
       fprintf(fout,"%s ", requisicao->params->param); //http/1.1
       switch (tipo) {
@@ -103,7 +126,7 @@ void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, F
           fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
           fprintf(fout,"Last-Modified: \t%s\n", formatdate(date, fileStat.st_mtime));
           fprintf(fout,"Accept-Ranges: \tbytes\n");
-          fprintf(fout,"Content-Length: %d bytes\n",fileStat.st_size); //ESSE NAO EH O LENGTH CORRETO, MAS POR HORA VAMOS DEIXAR ASSIM
+          fprintf(fout,"Content-Length: %d bytes\n",tamanho);
           fprintf(fout,"Vary: \t\tAccept-Encoding\n");
           fprintf(fout,"Content-Type: \ttext/html\n");
           if(findParam(requisicao, "Connection"))
@@ -115,7 +138,7 @@ void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, F
           fprintf(fout,"Server: \tServidor HTTP ver. 0.2 Grupo 7\n");
           fprintf(fout,"Last-Modified: \t%s\n", formatdate(date, fileStat.st_mtime));
           fprintf(fout,"Accept-Ranges: \tbytes\n");
-          fprintf(fout,"Content-Length: %d bytes\n",fileStat.st_size); //ESSE NAO EH O LENGTH CORRETO, MAS POR HORA VAMOS DEIXAR ASSIM
+          fprintf(fout,"Content-Length: %d bytes\n",tamanho);
           fprintf(fout,"Vary: \t\tAccept-Encoding\n");
           fprintf(fout,"Content-Type: \ttext/html\n");
           if(findParam(requisicao, "Connection"))
@@ -128,7 +151,7 @@ void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, F
           if(findParam(requisicao, "Connection"))
               fprintf(fout,"Connection: \t%s\n", findParam(requisicao, "Connection")->params->param);
           fprintf(fout,"Content-Type: \ttext/html\n");
-          fprintf(fout,"Content-Length: %d bytes\n",fileStat.st_size); //ESSE NAO EH O LENGTH CORRETO, MAS POR HORA VAMOS DEIXAR ASSIM
+          fprintf(fout,"Content-Length: %d bytes\n",tamanho);
           break;
         case OPTIONS:
           fprintf(fout," \t200 OK\n");
@@ -163,13 +186,13 @@ void getOutput(command_list * requisicao, FILE * fout){
       erro(BAD_REQUEST, fout);
     }
     //caso FORBIDDEN
-    else if (get_access(requisicao->params->next->param, 0, fout) == FORBIDDEN) {
+    else if (get_access(requisicao->params->next->param, 0, fout, NULL) == FORBIDDEN) {
       getCabecalho(requisicao->params->next->param, requisicao, FORBIDDEN, fout);
       fprintf(fout,"\n\n");
       erro(FORBIDDEN, fout);
     }
     //caso NOT_FOUND
-    else if (get_access(requisicao->params->next->param, 0, fout) == NOT_FOUND) {
+    else if (get_access(requisicao->params->next->param, 0, fout, NULL) == NOT_FOUND) {
       getCabecalho(requisicao->params->next->param, requisicao, NOT_FOUND, fout);
       fprintf(fout,"\n\n");
       erro(NOT_FOUND, fout);
@@ -178,7 +201,7 @@ void getOutput(command_list * requisicao, FILE * fout){
     else if (strcmp(requisicao->command, "GET") == 0){
         fprintf(fout,"\n");
         getCabecalho(requisicao->params->next->param, requisicao, GET, fout); //imprime o cabecalho
-        get_access(requisicao->params->next->param, 1, fout);   //imprime o HTML
+        get_access(requisicao->params->next->param, 1, fout, NULL);   //imprime o HTML
     }
     else if(strcmp(requisicao->command, "HEAD") == 0){
         getCabecalho(requisicao->params->next->param, requisicao, HEAD, fout); //imprime o cabecalho
@@ -230,7 +253,7 @@ int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat, FILE * fout
 }
 
 //Acessa o recurso com o get para verificar o arquivo e possivelmente imprimi-lo
-tipo_cabecalho get_access(char *local , int imprimir, FILE * fout) {
+tipo_cabecalho get_access(char *local , int imprimir, FILE * fout, char *endereco) {
     char address[ADDRESS_SIZE], temp_address[ADDRESS_SIZE];
     char *buffer;
     struct stat fileStat;
@@ -260,6 +283,7 @@ tipo_cabecalho get_access(char *local , int imprimir, FILE * fout) {
             if(stat(temp_address,&fileStat) >= 0){
               //gambiarra extrema to com sono
               if( (fileStat.st_mode & S_IRUSR) ){
+		  if(endereco) strcpy(endereco, temp_address);
                   if(imprimir) escreveArquivo(temp_address, fileStat, fout);
                   return 0;
               }
@@ -277,6 +301,7 @@ tipo_cabecalho get_access(char *local , int imprimir, FILE * fout) {
             if(stat(temp_address,&fileStat) >= 0){
               //gambiarra extrema to com sono
               if( (fileStat.st_mode & S_IRUSR) ){
+		  if(endereco) strcpy(endereco, temp_address);
                   if(imprimir) escreveArquivo(temp_address, fileStat, fout);
                   return 0;
               }
@@ -297,6 +322,7 @@ tipo_cabecalho get_access(char *local , int imprimir, FILE * fout) {
     }
     //se o recurso eh um arquivo
     else {
+	if(endereco) strcpy(endereco, temp_address);
         if(imprimir) escreveArquivo(address, fileStat, fout);
     }
     return 0;

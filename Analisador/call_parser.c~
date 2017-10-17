@@ -3,8 +3,6 @@
 #include "y.tab.h"
 #include "serverlib.h"
 #include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
 
 main(arg_cont, arg_valor)
 int arg_cont;
@@ -22,10 +20,7 @@ char **arg_valor;
     int novo_soquete;			/* soquete de conexão aos clientes		*/
     int nome_compr;			/* comprimento do nome de um cliente		*/
     int mensagem_compr;			/* comprimento da mensagem recebida		*/
-    FILE * fin, *fout;
-    char * buffer = 0;
-    long length;
-    FILE * f;
+ 	FILE * fin, *fout;
  
 
     /*
@@ -105,9 +100,8 @@ char **arg_valor;
     yy_scan_string(area);
       
     printf("Starting program to call the parser and process a request... \n");
-
       
-    if((fout = fopen("tmpOut.txt", "w+")) == NULL){
+    if((fout = fopen("tmpOut.txt", "w")) == NULL){
       printf("Cannot write into %s\n", "tmpOut.txt");
       exit (0);
     }
@@ -117,49 +111,22 @@ char **arg_valor;
       getOutput(NULL, fout);
       return 0;
     }
-    
+      
     result = symtab_get_parse_result();
     getOutput(result, fout);
       
-    /* Fechando o arquivo... */
-    fprintf(fout, "\n\0" );
-    //close(fout);
-    rewind(fout);
-    f = fout;
-    //fflush(stdout);
-    
-    //envia o conteudo requisitado para o cliente
-    //f = fopen ("tmpOut.txt", "rb");
-    if (f)
-    {
-      fseek (f, 0, SEEK_END);
-      length = ftell (f);
-      fseek (f, 0, SEEK_SET);
-      buffer = malloc (length);
-      if (buffer)
-      {
-	fread (buffer, 1, length, f);
-      }
-      fclose (f);
-    }
-
-    if (buffer)
-    {
-      buffer[length]='\0';
-    }
-   
-    send(novo_soquete, buffer, strlen(buffer), 0);    
-    
+    fflush(stdout);
     close(novo_soquete);
-    close(f);
-    
-    
-    break;
+
     }  /* Laço termina aqui */
 
     close(soquete); 
-    printf("O servidor terminou.\n");
+    printf("O servidor terminou com erro.\n");
     exit(5);
+    
+    /* Fechando o arquivo... */
+    fprintf(fout, "\n\0" );
+    close(fout);
 
     printf("Finished!\n");
 }
