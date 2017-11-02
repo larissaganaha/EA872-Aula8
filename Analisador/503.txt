@@ -1,0 +1,19 @@
+
+HTTP/1.1 	503 Service Unavailable
+Date: 		Tue Oct 17 17:40:36 2017 BRST
+Server: 	Servidor HTTP ver. 0.2 Grupo 7
+Last-Modified: 	Tue Oct 17 17:39:19 2017 BRST
+Accept-Ranges: 	bytes
+Content-Length: 200 bytes
+Vary: 		Accept-Encoding
+Content-Type: 	text/html
+Connection: 	keep-alive
+
+<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">
+<html><head>
+<title>503 Server Unavailable</title>
+</head><body>
+<h1>Server Unavailable</h1>
+<p>The Server is busy right now
+</p>
+</body></html>

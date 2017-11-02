@@ -1,8 +1,8 @@
 
 HTTP/1.1  	200 OK
-Date: 		Tue Oct 17 20:47:02 2017 BRST
+Date: 		Wed Nov  1 22:15:32 2017 BRST
 Server: 	Servidor HTTP ver. 0.2 Grupo 7
-Last-Modified: 	Tue Oct 17 20:28:29 2017 BRST
+Last-Modified: 	Wed Nov  1 20:52:28 2017 BRST
 Accept-Ranges: 	bytes
 Content-Length: 380 bytes
 Vary: 		Accept-Encoding
@@ -23,10 +23,10 @@ Connection: 	keep-alive
   -->
   </style>
   </head>
-  <body bgcolor = "#cb1eea" text = "#000000">
-  <h1>TEXTO1.HTML !</h1>
+  <body bgcolor = "#1eeae7" text = "#000000">
+  <h1>TEXTO2.HTML !</h1>
   
-  <P> THIS IS A GENERIC HTML TEXTO1 PAGE </P>
+  <P> THIS IS A GENERIC HTML TEXTO2 PAGE </P>
   <P> INSIDE ./dir1 </P>
   
   </body>
