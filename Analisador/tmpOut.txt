@@ -1,34 +1,17 @@
-
-HTTP/1.1  	200 OK
-Date: 		Wed Nov  1 22:15:32 2017 BRST
+HTTP/1.1 	400 Bad Request
+Date: 		Fri Nov 17 14:45:29 2017 -02
 Server: 	Servidor HTTP ver. 0.2 Grupo 7
-Last-Modified: 	Wed Nov  1 20:52:28 2017 BRST
-Accept-Ranges: 	bytes
-Content-Length: 380 bytes
-Vary: 		Accept-Encoding
+Content-Length: 219
+Connection: 	close
 Content-Type: 	text/html
-Connection: 	keep-alive
 
-<html>
-  <head>
-  <title>       </title>
-  <style type="text/css">
-  <!--
-  h1	{text-align:left;
-    font-family:Arial, Helvetica, Sans-Serif;
-    }
-  
-  p	{text-indent:20px;
-    }
-  -->
-  </style>
-  </head>
-  <body bgcolor = "#1eeae7" text = "#000000">
-  <h1>TEXTO2.HTML !</h1>
-  
-  <P> THIS IS A GENERIC HTML TEXTO2 PAGE </P>
-  <P> INSIDE ./dir1 </P>
-  
-  </body>
-  </html>
-    
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>400 Bad Request</title>
+</head><body>
+<h1>Bad Request</h1>
+<p>Your browser sent a request that this server could not understand.
+</p>
+</body></html>
+

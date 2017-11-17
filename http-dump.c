@@ -114,7 +114,6 @@ char **arg_valor;
      */
     printf("\nMensagem recebida:\n");
     for(i = 0; i < mensagem_compr; i++) printf("%c", area[i]);
-    printf()
     fflush(stdout);
     close(novo_soquete);
 

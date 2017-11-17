@@ -11,7 +11,7 @@ int numMaxChild = 2;
 
 void incChild(){
   numMaxChild++;
-  printf("///////////2/////////// numMaxChild=%d\n", numMaxChild);
+  //printf("///////////2/////////// numMaxChild=%d\n", numMaxChild);
 }
 
 
@@ -102,7 +102,7 @@ char **arg_valor;
       perror("Erro em accept().\n");
       break;
     }
-    printf("surgiu requisicao\n");
+    //printf("surgiu requisicao\n");
   
   
     if(numMaxChild){
@@ -117,10 +117,10 @@ char **arg_valor;
           timeout.tv_usec = 0; /* valor inicial da contagem de tolerancia */
           n = select(novo_soquete+1, &fds, NULL, NULL, &timeout);
           if(n == 0) {
-            printf("n == 0!\n");
+            //printf("n == 0!\n");
             exit(1);
           }
-          printf("saiu do select\n");
+          //printf("saiu do select\n");
           
           /*
           * Receba a mensagem no novo soquete.
@@ -130,19 +130,19 @@ char **arg_valor;
             break;
           }
           
-          printf("///////////1/////////// numMaxChild=%d\n", numMaxChild);
+          //printf("///////////1/////////// numMaxChild=%d\n", numMaxChild);
           /* 
           * Imprima o que recebeu e feche a conexão.
           */
-          printf("\nMensagem recebida:\n");
+          //printf("\nMensagem recebida:\n");
           
           area[mensagem_compr] = '\0';
           
           yy_scan_string(area);
           
           
-          printf("Starting program to call the parser and process a request...(sleep 5) \n");
-          sleep(5);
+          //printf("Starting program to call the parser and process a request...(sleep 5) \n");
+          //sleep(5);
           printf(area);
           
           if((fout = fopen("tmpOut.txt", "w+")) == NULL){
@@ -197,10 +197,10 @@ char **arg_valor;
       timeout.tv_usec = 0; /* valor inicial da contagem de tolerancia */
       n = select(novo_soquete+1, &fds, NULL, NULL, &timeout);
       if(n == 0) {
-        printf("n == 0!\n");
+        printf("timeout!\n");
         exit(1);
       }
-      printf("saiu do select\n");
+      //printf("saiu do select\n");
       
       /*
       * Receba a mensagem no novo soquete.
