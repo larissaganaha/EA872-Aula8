@@ -899,7 +899,7 @@ case 10:
 YY_RULE_SETUP
 #line 59 "aula8.l"
 { sscanf(yytext, "%s", &yylval.str);
-			fprintf(stderr, "----(%s)----\n", yylval.str);
+			//fprintf(stderr, "----(%s)----\n", yylval.str);
 		  return(LOGINDATA);
 		}
 	YY_BREAK
@@ -917,7 +917,7 @@ case 13:
 YY_RULE_SETUP
 #line 67 "aula8.l"
 { sscanf(yytext, "%s", &yylval.str);
-					fprintf(stderr, "pegou palavra- %s\n", yylval.str );
+					//fprintf(stderr, "pegou palavra- %s\n", yylval.str );
 		  return (PALAVRA);
 		}
 	YY_BREAK
@@ -925,7 +925,7 @@ case 14:
 YY_RULE_SETUP
 #line 72 "aula8.l"
 {sscanf(yytext, "%s", &yylval.str);
-				fprintf(stderr, "pegou palavra- %s\n", yylval.str );
+				//fprintf(stderr, "pegou palavra- %s\n", yylval.str );
 		  return (PALAVRA);
 		}
 	YY_BREAK
@@ -957,13 +957,13 @@ case 19:
 /* rule 19 can match eol */
 YY_RULE_SETUP
 #line 86 "aula8.l"
-{fprintf(stderr, "pegou fimreq\n"); (FIM_REQ);}
+{ return(FIM_REQ);}
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
 #line 87 "aula8.l"
-{fprintf(stderr, "pegou nl\n");return(NL);}
+{ return(NL);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP

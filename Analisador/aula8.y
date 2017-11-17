@@ -70,7 +70,6 @@ linha   :   comando parametro_final {nLinha++;
                                     comando_detectado = 0;
                                     fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido. \n" RESET, nLinha);}
             | FIM_REQ               {nLinha++;
-									fprintf(stderr,"FIM REQ CONSUMIDO\n");
                                     comando_detectado = 0;}
             |LOGINDATA				{strcpy(comandoTxt, $1);
 									separaLogin(comandoTxt);
@@ -207,17 +206,17 @@ void separaLogin(char *comandoTxt){
 		pch = strtok(NULL, "&");
 		i++;
 	}
-	fprintf(stderr,"nome:%s senha:%s\n",nome,senha);
+	//fprintf(stderr,"nome:%s senha:%s\n",nome,senha);
 	
 	pch = strtok(nome, "=");
 	pch = strtok(NULL, "=");
 	strcpy(nome,pch);
-	fprintf(stderr, "------------------------nome: %s\n",nome);
+	//fprintf(stderr, "------------------------nome: %s\n",nome);
 	
 	pch = strtok(senha, "=");
 	pch = strtok(NULL, "=");
 	strcpy(senha,pch);
-	fprintf(stderr, "------------------------senha: %s\n",senha);
+	//fprintf(stderr, "------------------------senha: %s\n",senha);
 }
 
 

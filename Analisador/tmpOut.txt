@@ -1,6 +1,6 @@
 
 HTTP/1.1  	200 OK
-Date: 		Fri Nov 17 21:23:39 2017 -02
+Date: 		Fri Nov 17 21:50:29 2017 -02
 Server: 	Servidor HTTP ver. 0.2 Grupo 7
 Last-Modified: 	Fri Nov 17 18:32:57 2017 -02
 Accept-Ranges: 	bytes

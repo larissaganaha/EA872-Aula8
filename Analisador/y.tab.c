@@ -490,8 +490,8 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    56,    56,    57,    60,    62,    64,    66,    69,    72,
-      75,    79,    81,    84,    87,    88,    89,    92,    96,    97,
-     100,   101,   103,   104,   106,   111,   116
+      74,    78,    80,    83,    86,    87,    88,    91,    95,    96,
+      99,   100,   102,   103,   105,   110,   115
 };
 #endif
 
@@ -1321,88 +1321,87 @@ yyreduce:
   case 9:
 #line 72 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
-									fprintf(stderr,"FIM REQ CONSUMIDO\n");
                                     comando_detectado = 0;}
-#line 1327 "y.tab.c" /* yacc.c:1646  */
+#line 1326 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 75 "aula8.y" /* yacc.c:1646  */
+#line 74 "aula8.y" /* yacc.c:1646  */
     {strcpy(comandoTxt, (yyvsp[0].str));
 									separaLogin(comandoTxt);
 									}
-#line 1335 "y.tab.c" /* yacc.c:1646  */
+#line 1334 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 79 "aula8.y" /* yacc.c:1646  */
+#line 78 "aula8.y" /* yacc.c:1646  */
     {strcpy(comandoTxt, (yyvsp[0].str));
                                     requisicao = add_command_list(&comandoTxt);}
-#line 1342 "y.tab.c" /* yacc.c:1646  */
+#line 1341 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 81 "aula8.y" /* yacc.c:1646  */
+#line 80 "aula8.y" /* yacc.c:1646  */
     {strcpy(paramTxt, (yyvsp[0].str));
                                     add_param_list_begin(&paramTxt);}
-#line 1349 "y.tab.c" /* yacc.c:1646  */
+#line 1348 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 84 "aula8.y" /* yacc.c:1646  */
+#line 83 "aula8.y" /* yacc.c:1646  */
     {frase[0] = '\0';
                                     strcpy(comandoTxt, (yyvsp[0].str));
                                     add_command_list(&comandoTxt);}
-#line 1357 "y.tab.c" /* yacc.c:1646  */
+#line 1356 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 87 "aula8.y" /* yacc.c:1646  */
+#line 86 "aula8.y" /* yacc.c:1646  */
     {strcat(frase, ",");}
-#line 1363 "y.tab.c" /* yacc.c:1646  */
+#line 1362 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 88 "aula8.y" /* yacc.c:1646  */
+#line 87 "aula8.y" /* yacc.c:1646  */
     {strcat(frase, ":");}
-#line 1369 "y.tab.c" /* yacc.c:1646  */
+#line 1368 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 89 "aula8.y" /* yacc.c:1646  */
+#line 88 "aula8.y" /* yacc.c:1646  */
     {strcat(frase, " ");
                                     strcat(frase, (yyvsp[0].str));}
-#line 1376 "y.tab.c" /* yacc.c:1646  */
+#line 1375 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 92 "aula8.y" /* yacc.c:1646  */
+#line 91 "aula8.y" /* yacc.c:1646  */
     {comando_detectado = 1;
                                     strcpy(comandoTxt, (yyvsp[-1].str));
                                     add_command_list(&comandoTxt);}
-#line 1384 "y.tab.c" /* yacc.c:1646  */
+#line 1383 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 106 "aula8.y" /* yacc.c:1646  */
+#line 105 "aula8.y" /* yacc.c:1646  */
     { if(comando_detectado){
                                         strcpy(paramTxt, (yyvsp[-1].str));
                                         add_param_list_begin(&paramTxt);
                                     }}
-#line 1393 "y.tab.c" /* yacc.c:1646  */
+#line 1392 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 111 "aula8.y" /* yacc.c:1646  */
+#line 110 "aula8.y" /* yacc.c:1646  */
     { if(comando_detectado){
                                         strcpy(paramTxt, (yyvsp[-1].str));
                                         add_param_list_begin(&paramTxt);
                                     }}
-#line 1402 "y.tab.c" /* yacc.c:1646  */
+#line 1401 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1406 "y.tab.c" /* yacc.c:1646  */
+#line 1405 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1630,7 +1629,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 120 "aula8.y" /* yacc.c:1906  */
+#line 119 "aula8.y" /* yacc.c:1906  */
 
 
 //funcao apenas para suprimir o print "syntax error"
@@ -1721,17 +1720,17 @@ void separaLogin(char *comandoTxt){
 		pch = strtok(NULL, "&");
 		i++;
 	}
-	fprintf(stderr,"nome:%s senha:%s\n",nome,senha);
+	//fprintf(stderr,"nome:%s senha:%s\n",nome,senha);
 	
 	pch = strtok(nome, "=");
 	pch = strtok(NULL, "=");
 	strcpy(nome,pch);
-	fprintf(stderr, "------------------------nome: %s\n",nome);
+	//fprintf(stderr, "------------------------nome: %s\n",nome);
 	
 	pch = strtok(senha, "=");
 	pch = strtok(NULL, "=");
 	strcpy(senha,pch);
-	fprintf(stderr, "------------------------senha: %s\n",senha);
+	//fprintf(stderr, "------------------------senha: %s\n",senha);
 }
 
 

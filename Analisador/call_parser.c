@@ -171,10 +171,10 @@ char **arg_valor;
           area[mensagem_compr] = '\0';
           
           
-		  fprintf(stderr,"estamos recebendo ---------------------------------------\n");
+		  /*fprintf(stderr,"estamos recebendo ---------------------------------------\n");
 		  fprintf(stderr,area);
           fprintf(stderr,"---------------------------------------------------------\n");
-		  fflush(stdout);
+		  fflush(stdout);*/
 		  yy_scan_string(area);
           
           //printf("Starting program to call the parser and process a request...(sleep 5) \n");
@@ -185,7 +185,7 @@ char **arg_valor;
           exit (0);
           }
           if( yyparse() ){
-		  fprintf(stderr, "req mal formada");
+		  //fprintf(stderr, "req mal formada");
           //requisicao esta mal formada
           getOutput(NULL, fout, 0);
           return 0;
@@ -194,7 +194,7 @@ char **arg_valor;
 		  cadastro = verificaReg(result->params->next->param);
 		  senha = getSenha();
 		  nome = getNome();
-		  printf("NOME: %s\t SENHA: %s\n", nome, senha);
+		  //printf("NOME: %s\t SENHA: %s\n", nome, senha);
 		  if(cadastro){
 			  if(verificaUser(nome)==0){
 				  //insere o primeiro usuario
@@ -211,7 +211,7 @@ char **arg_valor;
 			  if(verificaLogin(nome,senha)) postValido = 1;
 			  else postValido = 0;
 		  }
-		  fprintf(stderr, "***************postValido= %d\n", postValido);
+		  //fprintf(stderr, "***************postValido= %d\n", postValido);
 		  //antes disse precisamos saber se eh login ou cadastro, se foi falho ou sucesso
           getOutput(result, fout, postValido);
           
