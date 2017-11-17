@@ -19,7 +19,7 @@ main(arg_cont, arg_valor)
 int arg_cont;
 char **arg_valor;
 {
-  int r , i , j , sz , n ;
+  int r , i , j , sz , n, validade;
   long int tolerancia = 10;
   char *req;
   struct command_list * result = NULL;
@@ -138,24 +138,30 @@ char **arg_valor;
           
           area[mensagem_compr] = '\0';
           
-          yy_scan_string(area);
           
+		  fprintf(stderr,"estamos recebendo ---------------------------------------\n");
+		  fprintf(stderr,area);
+          fprintf(stderr,"---------------------------------------------------------\n");
+		  fflush(stdout);
+		  yy_scan_string(area);
           
           //printf("Starting program to call the parser and process a request...(sleep 5) \n");
           //sleep(5);
-          printf(area);
           
           if((fout = fopen("tmpOut.txt", "w+")) == NULL){
           printf("Cannot write into %s\n", "tmpOut.txt");
           exit (0);
           }
           if( yyparse() ){
+		  fprintf(stderr, "req mal formada");
           //requisicao esta mal formada
-          getOutput(NULL, fout);
+          getOutput(NULL, fout, 0);
           return 0;
           }
+          validade = acessoValido();
+		  fprintf(stderr, "####################validade: %d\n", validade);
           result = symtab_get_parse_result();
-          getOutput(result, fout);
+          getOutput(result, fout, validade);
           
           /* Fechando o arquivo... */
           fprintf(fout, "\n\0" );

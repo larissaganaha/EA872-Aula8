@@ -50,11 +50,12 @@ extern int yydebug;
     PARAMETRO_SP = 260,
     PARAMETRO_UA = 261,
     COMANDO = 262,
-    VIRGULA = 263,
-    NL = 264,
-    DP = 265,
-    INVALIDO = 266,
-    FIM_REQ = 267
+    LOGINDATA = 263,
+    VIRGULA = 264,
+    NL = 265,
+    DP = 266,
+    INVALIDO = 267,
+    FIM_REQ = 268
   };
 #endif
 /* Tokens.  */
@@ -63,22 +64,23 @@ extern int yydebug;
 #define PARAMETRO_SP 260
 #define PARAMETRO_UA 261
 #define COMANDO 262
-#define VIRGULA 263
-#define NL 264
-#define DP 265
-#define INVALIDO 266
-#define FIM_REQ 267
+#define LOGINDATA 263
+#define VIRGULA 264
+#define NL 265
+#define DP 266
+#define INVALIDO 267
+#define FIM_REQ 268
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 40 "aula8.y" /* yacc.c:1909  */
+#line 45 "aula8.y" /* yacc.c:1909  */
 
     char str[200];
 
-#line 82 "y.tab.h" /* yacc.c:1909  */
+#line 84 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

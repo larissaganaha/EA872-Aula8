@@ -16,7 +16,7 @@ typedef struct param_list{
 
 char *formatdate(char *buff, time_t val);
 void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, FILE * fout);
-void getOutput(command_list * requisicao, FILE * fout);
+void getOutput(command_list * requisicao, FILE * fout, int postValido);
 int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat, FILE * fout);
 tipo_cabecalho get_access(char *local , int imprimir, FILE * fout, char *endereco);
 command_list * findParam(command_list * requisicao, char * param);

@@ -55,15 +55,25 @@
 			sscanf("User-Agent", "%s", &yylval.str);
 			return (COMANDO);
 		}
+		
+name=.* { sscanf(yytext, "%s", &yylval.str);
+			fprintf(stderr, "----(%s)----\n", yylval.str);
+		  return(LOGINDATA);
+		}
 
-[a-zA-Z0-9_Ç-Û;/+.=*()-]+ 		{ sscanf(yytext, "%s", &yylval.str);
+Referer.* ;
+Content-Type.* ;
+		
+[a-zA-Z0-9_Ç-Û;/+&.=*()-]+ 		{ sscanf(yytext, "%s", &yylval.str);
+					fprintf(stderr, "pegou palavra- %s\n", yylval.str );
 		  return (PALAVRA);
 		}
 
 localhost:[0-9]+				{sscanf(yytext, "%s", &yylval.str);
+				fprintf(stderr, "pegou palavra- %s\n", yylval.str );
 		  return (PALAVRA);
 		}
-
+		
 :		{ sscanf(yytext, "%s", &yylval.str);
 		  return(DP);
 		}
@@ -73,8 +83,8 @@ localhost:[0-9]+				{sscanf(yytext, "%s", &yylval.str);
 
 [ ]		;
 [#].*   ;
-^\r\n		{return(FIM_REQ);}
-\r\n		{return(NL);}
+^\r\n		{fprintf(stderr, "pegou fimreq\n"); (FIM_REQ);}
+\r\n		{fprintf(stderr, "pegou nl\n");return(NL);}
 
 .		return(INVALIDO);
 

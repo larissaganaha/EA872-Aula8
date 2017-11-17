@@ -90,6 +90,7 @@
     command_list *symtab_get_parse_result();
     void add_param_list_begin(char *param);
     void print_list();
+    void separaLogin(char *comandoTxt);
 
     struct command_list * list = NULL;
     struct command_list * requisicao = NULL;
@@ -99,9 +100,13 @@
     char comandoTxt[200];
     char paramTxt[200];
     char frase[200];
+    char nome[200];
+    char senha[200];
+    char nomevalido[200] = "EA872";
+    char senhavalida[200] = "123";
     
 
-#line 105 "y.tab.c" /* yacc.c:339  */
+#line 110 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -141,11 +146,12 @@ extern int yydebug;
     PARAMETRO_SP = 260,
     PARAMETRO_UA = 261,
     COMANDO = 262,
-    VIRGULA = 263,
-    NL = 264,
-    DP = 265,
-    INVALIDO = 266,
-    FIM_REQ = 267
+    LOGINDATA = 263,
+    VIRGULA = 264,
+    NL = 265,
+    DP = 266,
+    INVALIDO = 267,
+    FIM_REQ = 268
   };
 #endif
 /* Tokens.  */
@@ -154,22 +160,23 @@ extern int yydebug;
 #define PARAMETRO_SP 260
 #define PARAMETRO_UA 261
 #define COMANDO 262
-#define VIRGULA 263
-#define NL 264
-#define DP 265
-#define INVALIDO 266
-#define FIM_REQ 267
+#define LOGINDATA 263
+#define VIRGULA 264
+#define NL 265
+#define DP 266
+#define INVALIDO 267
+#define FIM_REQ 268
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 40 "aula8.y" /* yacc.c:355  */
+#line 45 "aula8.y" /* yacc.c:355  */
 
     char str[200];
 
-#line 173 "y.tab.c" /* yacc.c:355  */
+#line 180 "y.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -184,7 +191,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 188 "y.tab.c" /* yacc.c:358  */
+#line 195 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -424,23 +431,23 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  19
+#define YYFINAL  20
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   32
+#define YYLAST   35
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  13
+#define YYNTOKENS  14
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  12
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  25
+#define YYNRULES  26
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  34
+#define YYNSTATES  35
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   267
+#define YYMAXUTOK   268
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -475,16 +482,16 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11,    12
+       5,     6,     7,     8,     9,    10,    11,    12,    13
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    51,    51,    52,    55,    57,    59,    61,    64,    67,
-      70,    72,    75,    78,    79,    80,    83,    87,    88,    91,
-      92,    94,    95,    97,   102,   107
+       0,    56,    56,    57,    60,    62,    64,    66,    69,    72,
+      75,    79,    81,    84,    87,    88,    89,    92,    96,    97,
+     100,   101,   103,   104,   106,   111,   116
 };
 #endif
 
@@ -494,10 +501,10 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "PALAVRA", "COMANDO_HTTP",
-  "PARAMETRO_SP", "PARAMETRO_UA", "COMANDO", "VIRGULA", "NL", "DP",
-  "INVALIDO", "FIM_REQ", "$accept", "linhas", "linha", "comando_HTTP",
-  "comando_sp", "comando", "erro", "parametro_final", "parametros",
-  "parametro_NL", "parametro", "palavra", YY_NULLPTR
+  "PARAMETRO_SP", "PARAMETRO_UA", "COMANDO", "LOGINDATA", "VIRGULA", "NL",
+  "DP", "INVALIDO", "FIM_REQ", "$accept", "linhas", "linha",
+  "comando_HTTP", "comando_sp", "comando", "erro", "parametro_final",
+  "parametros", "parametro_NL", "parametro", "palavra", YY_NULLPTR
 };
 #endif
 
@@ -507,14 +514,14 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267
+     265,   266,   267,   268
 };
 # endif
 
-#define YYPACT_NINF -5
+#define YYPACT_NINF -7
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-5)))
+  (!!((Yystate) == (-7)))
 
 #define YYTABLE_NINF -1
 
@@ -525,10 +532,10 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      10,    -5,    -5,    -5,     6,    -5,     0,    -5,    -4,    15,
-      18,    -5,     9,    -5,    -5,     3,    -5,    -5,    20,    -5,
-      -5,    -5,    -5,    -5,    -5,    -5,    -5,    -5,    -5,    -5,
-      -5,    -5,    -5,    -5
+      11,    -7,    -7,    -7,    -7,     7,    -7,     0,    -7,    -4,
+      17,    13,    -7,    -6,    -7,    -7,    18,    -7,    -7,    20,
+      -7,    -7,    -7,    -7,    -7,    -7,    -7,    -7,    -7,    -7,
+      -7,    -7,    -7,    -7,    -7
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -536,24 +543,24 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,    25,    10,    12,     0,     9,     0,     3,     0,     0,
-       0,     8,     0,    18,    17,     0,    20,    21,     0,     1,
-       2,    11,     6,    13,     7,    14,    15,     5,     4,    16,
-      19,    22,    24,    23
+       0,    26,    11,    13,    10,     0,     9,     0,     3,     0,
+       0,     0,     8,     0,    19,    18,     0,    21,    22,     0,
+       1,     2,    12,     6,    14,     7,    15,    16,     5,     4,
+      17,    20,    23,    25,    24
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -5,    -5,    24,    -5,    -5,    -5,    -5,    16,    -5,     1,
-      17,     2
+      -7,    -7,    24,    -7,    -7,    -7,    -7,    14,    -7,    16,
+      19,     2
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     6,     7,     8,     9,    10,    11,    14,    15,    16,
-      17,    18
+      -1,     7,     8,     9,    10,    11,    12,    15,    16,    17,
+      18,    19
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -561,44 +568,44 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      19,    21,    12,     1,     2,    22,     1,     3,    12,     1,
-       4,    26,     5,     1,     2,    13,    30,     3,     1,    29,
-       4,     1,     5,    23,    24,    25,    28,    27,    32,    33,
-      20,     0,    31
+      20,    22,    13,     1,     2,    30,    23,     3,     4,    13,
+       1,     5,    27,     6,     1,     2,     1,    14,     3,     4,
+       1,     1,     5,    28,     6,    29,    24,    25,    26,    33,
+      34,    21,    31,     0,     0,    32
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     5,     0,     3,     4,     9,     3,     7,     6,     3,
-      10,     9,    12,     3,     4,     9,    15,     7,     3,    10,
-      10,     3,    12,     8,     9,    10,    10,     9,     8,     9,
-       6,    -1,    15
+       0,     5,     0,     3,     4,    11,    10,     7,     8,     7,
+       3,    11,    10,    13,     3,     4,     3,    10,     7,     8,
+       3,     3,    11,    10,    13,    11,     9,    10,    11,     9,
+      10,     7,    16,    -1,    -1,    16
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     4,     7,    10,    12,    14,    15,    16,    17,
-      18,    19,    24,     9,    20,    21,    22,    23,    24,     0,
-      15,     5,     9,     8,     9,    10,    24,     9,    20,    10,
-      22,    23,     8,     9
+       0,     3,     4,     7,     8,    11,    13,    15,    16,    17,
+      18,    19,    20,    25,    10,    21,    22,    23,    24,    25,
+       0,    16,     5,    10,     9,    10,    11,    25,    10,    21,
+      11,    23,    24,     9,    10
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    13,    14,    14,    15,    15,    15,    15,    15,    15,
-      16,    16,    17,    17,    17,    17,    18,    19,    19,    20,
-      20,    21,    21,    22,    23,    24
+       0,    14,    15,    15,    16,    16,    16,    16,    16,    16,
+      16,    17,    17,    18,    18,    18,    18,    19,    20,    20,
+      21,    21,    22,    22,    23,    24,    25
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     2,     1,     2,     2,     2,     2,     1,     1,
-       1,     2,     1,     2,     2,     2,     2,     2,     2,     2,
-       1,     1,     2,     2,     2,     1
+       1,     1,     2,     1,     2,     2,     2,     2,     2,     2,
+       2,     1,     1,     2,     2,     2,     1
 };
 
 
@@ -1275,118 +1282,127 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 55 "aula8.y" /* yacc.c:1646  */
-    {nLinha++;
-                                    comando_detectado = 0;}
-#line 1282 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 5:
-#line 57 "aula8.y" /* yacc.c:1646  */
+#line 60 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
                                     comando_detectado = 0;}
 #line 1289 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 6:
-#line 59 "aula8.y" /* yacc.c:1646  */
+  case 5:
+#line 62 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
                                     comando_detectado = 0;}
 #line 1296 "y.tab.c" /* yacc.c:1646  */
     break;
 
+  case 6:
+#line 64 "aula8.y" /* yacc.c:1646  */
+    {nLinha++;
+                                    comando_detectado = 0;}
+#line 1303 "y.tab.c" /* yacc.c:1646  */
+    break;
+
   case 7:
-#line 61 "aula8.y" /* yacc.c:1646  */
+#line 66 "aula8.y" /* yacc.c:1646  */
     {add_param_list_begin(&frase);
                                     nLinha++;
                                     comando_detectado = 0;}
-#line 1304 "y.tab.c" /* yacc.c:1646  */
+#line 1311 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 64 "aula8.y" /* yacc.c:1646  */
+#line 69 "aula8.y" /* yacc.c:1646  */
     {nLinha++;
                                     comando_detectado = 0;
                                     fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido. \n" RESET, nLinha);}
-#line 1312 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 9:
-#line 67 "aula8.y" /* yacc.c:1646  */
-    {nLinha++;
-                                    comando_detectado = 0;}
 #line 1319 "y.tab.c" /* yacc.c:1646  */
     break;
 
+  case 9:
+#line 72 "aula8.y" /* yacc.c:1646  */
+    {nLinha++;
+									fprintf(stderr,"FIM REQ CONSUMIDO\n");
+                                    comando_detectado = 0;}
+#line 1327 "y.tab.c" /* yacc.c:1646  */
+    break;
+
   case 10:
-#line 70 "aula8.y" /* yacc.c:1646  */
+#line 75 "aula8.y" /* yacc.c:1646  */
     {strcpy(comandoTxt, (yyvsp[0].str));
-                                    requisicao = add_command_list(&comandoTxt);}
-#line 1326 "y.tab.c" /* yacc.c:1646  */
+									separaLogin(comandoTxt);
+									}
+#line 1335 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 72 "aula8.y" /* yacc.c:1646  */
-    {strcpy(paramTxt, (yyvsp[0].str));
-                                    add_param_list_begin(&paramTxt);}
-#line 1333 "y.tab.c" /* yacc.c:1646  */
+#line 79 "aula8.y" /* yacc.c:1646  */
+    {strcpy(comandoTxt, (yyvsp[0].str));
+                                    requisicao = add_command_list(&comandoTxt);}
+#line 1342 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 75 "aula8.y" /* yacc.c:1646  */
-    {frase[0] = '\0';
-                                    strcpy(comandoTxt, (yyvsp[0].str));
-                                    add_command_list(&comandoTxt);}
-#line 1341 "y.tab.c" /* yacc.c:1646  */
+#line 81 "aula8.y" /* yacc.c:1646  */
+    {strcpy(paramTxt, (yyvsp[0].str));
+                                    add_param_list_begin(&paramTxt);}
+#line 1349 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 78 "aula8.y" /* yacc.c:1646  */
-    {strcat(frase, ",");}
-#line 1347 "y.tab.c" /* yacc.c:1646  */
+#line 84 "aula8.y" /* yacc.c:1646  */
+    {frase[0] = '\0';
+                                    strcpy(comandoTxt, (yyvsp[0].str));
+                                    add_command_list(&comandoTxt);}
+#line 1357 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 79 "aula8.y" /* yacc.c:1646  */
-    {strcat(frase, ":");}
-#line 1353 "y.tab.c" /* yacc.c:1646  */
+#line 87 "aula8.y" /* yacc.c:1646  */
+    {strcat(frase, ",");}
+#line 1363 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 80 "aula8.y" /* yacc.c:1646  */
-    {strcat(frase, " ");
-                                    strcat(frase, (yyvsp[0].str));}
-#line 1360 "y.tab.c" /* yacc.c:1646  */
+#line 88 "aula8.y" /* yacc.c:1646  */
+    {strcat(frase, ":");}
+#line 1369 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 83 "aula8.y" /* yacc.c:1646  */
+#line 89 "aula8.y" /* yacc.c:1646  */
+    {strcat(frase, " ");
+                                    strcat(frase, (yyvsp[0].str));}
+#line 1376 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 17:
+#line 92 "aula8.y" /* yacc.c:1646  */
     {comando_detectado = 1;
                                     strcpy(comandoTxt, (yyvsp[-1].str));
                                     add_command_list(&comandoTxt);}
-#line 1368 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 23:
-#line 97 "aula8.y" /* yacc.c:1646  */
-    { if(comando_detectado){
-                                        strcpy(paramTxt, (yyvsp[-1].str));
-                                        add_param_list_begin(&paramTxt);
-                                    }}
-#line 1377 "y.tab.c" /* yacc.c:1646  */
+#line 1384 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 102 "aula8.y" /* yacc.c:1646  */
+#line 106 "aula8.y" /* yacc.c:1646  */
     { if(comando_detectado){
                                         strcpy(paramTxt, (yyvsp[-1].str));
                                         add_param_list_begin(&paramTxt);
                                     }}
-#line 1386 "y.tab.c" /* yacc.c:1646  */
+#line 1393 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 25:
+#line 111 "aula8.y" /* yacc.c:1646  */
+    { if(comando_detectado){
+                                        strcpy(paramTxt, (yyvsp[-1].str));
+                                        add_param_list_begin(&paramTxt);
+                                    }}
+#line 1402 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1390 "y.tab.c" /* yacc.c:1646  */
+#line 1406 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1614,7 +1630,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 109 "aula8.y" /* yacc.c:1906  */
+#line 120 "aula8.y" /* yacc.c:1906  */
 
 
 //funcao apenas para suprimir o print "syntax error"
@@ -1693,6 +1709,42 @@ void add_param_list_begin(char *param) {
 
     return;
 }
+
+void separaLogin(char *comandoTxt){
+	char * pch;
+	pch = strtok(comandoTxt, "&");
+	int i=0;
+	while(pch){
+		fprintf(stderr, "%s\n", pch);
+		if(i==0) strcpy(nome,pch);
+		if(i==1) strcpy(senha,pch);
+		pch = strtok(NULL, "&");
+		i++;
+	}
+	fprintf(stderr,"nome:%s senha:%s\n",nome,senha);
+	
+	pch = strtok(nome, "=");
+	pch = strtok(NULL, "=");
+	strcpy(nome,pch);
+	fprintf(stderr, "------------------------nome: %s\n",nome);
+	
+	pch = strtok(senha, "=");
+	pch = strtok(NULL, "=");
+	strcpy(senha,pch);
+	fprintf(stderr, "------------------------senha: %s\n",senha);
+}
+
+
+
+
+int acessoValido(){
+	if(strcmp(nome, nomevalido)) return 0;
+	if(strcmp(senha, senhavalida)) return 0;
+	return 1;
+}
+
+
+
 
 command_list *symtab_get_parse_result(){
   return requisicao;

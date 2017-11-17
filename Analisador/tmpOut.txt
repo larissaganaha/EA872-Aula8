@@ -1,17 +1,35 @@
-HTTP/1.1 	400 Bad Request
-Date: 		Fri Nov 17 14:45:29 2017 -02
+
+HTTP/1.1  	200 OK
+Date: 		Fri Nov 17 17:54:49 2017 -02
 Server: 	Servidor HTTP ver. 0.2 Grupo 7
-Content-Length: 219
-Connection: 	close
+Last-Modified: 	Fri Nov 17 17:53:42 2017 -02
+Accept-Ranges: 	bytes
+Content-Length: 412 bytes
+Vary: 		Accept-Encoding
 Content-Type: 	text/html
+Connection: 	keep-alive
 
+<html>
+    <head>
+    <title>       </title>
+    <style type="text/css">
+    <!--
+    h1	{text-align:left;
+        font-family:Arial, Helvetica, Sans-Serif;
+        }
 
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>400 Bad Request</title>
-</head><body>
-<h1>Bad Request</h1>
-<p>Your browser sent a request that this server could not understand.
-</p>
-</body></html>
+    p	{text-indent:20px;
+        }
+    -->
+    </style>
+    </head>
+    <body bgcolor = "#ffffcc" text = "#000000">
+    <h1>INDEX.HTML !</h1>
+
+    <P> THIS IS A GENERIC HTML INDEX PAGE </P>
+    <P> INSIDE ./dir1 </P>
+
+    </body>
+    </html>
+ 
 

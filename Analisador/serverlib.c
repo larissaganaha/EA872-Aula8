@@ -171,54 +171,78 @@ void getCabecalho(char *local, command_list * requisicao, tipo_cabecalho tipo, F
 
 
 
-void getOutput(command_list * requisicao, FILE * fout){
+void getOutput(command_list * requisicao, FILE * fout, int postValido){
+	fprintf(stderr,"----1");
     struct stat fileStat;
     char address[ADDRESS_SIZE];
     //caso BAD_REQUEST
     if(requisicao == NULL){
+		fprintf(stderr,"----2");
       getCabecalho(NULL, NULL, BAD_REQUEST, fout);
       fprintf(fout,"\n\n");
       erro(BAD_REQUEST, fout);
     }
     //caso BAD_REQUEST por falta de Host (por enquanto pode ser qualquer host)
     else if(!(findParam(requisicao, "Host")) ){
+		fprintf(stderr,"----3");
       getCabecalho(NULL, NULL, BAD_REQUEST, fout);
       fprintf(fout,"\n\n");
       erro(BAD_REQUEST, fout);
     }
     //caso FORBIDDEN
     else if (get_access(requisicao->params->next->param, 0, fout, NULL) == FORBIDDEN) {
+		fprintf(stderr,"----4");
       getCabecalho(requisicao->params->next->param, requisicao, FORBIDDEN, fout);
       fprintf(fout,"\n\n");
       erro(FORBIDDEN, fout);
     }
     //caso NOT_FOUND
     else if (get_access(requisicao->params->next->param, 0, fout, NULL) == NOT_FOUND) {
+		fprintf(stderr,"----5");
       getCabecalho(requisicao->params->next->param, requisicao, NOT_FOUND, fout);
       fprintf(fout,"\n\n");
       erro(NOT_FOUND, fout);
     }
     //caso GET
     else if (strcmp(requisicao->command, "GET") == 0){
+		fprintf(stderr,"----6");
         fprintf(fout,"\n");
         getCabecalho(requisicao->params->next->param, requisicao, GET, fout); //imprime o cabecalho
         get_access(requisicao->params->next->param, 1, fout, NULL);   //imprime o HTML
     }
     else if(strcmp(requisicao->command, "HEAD") == 0){
+		fprintf(stderr,"----7");
         getCabecalho(requisicao->params->next->param, requisicao, HEAD, fout); //imprime o cabecalho
     }
     else if(strcmp(requisicao->command, "TRACE") == 0){
+		fprintf(stderr,"----8");
         getCabecalho(requisicao->params->next->param, requisicao, TRACE, fout); //imprime o cabecalho
     }
     else if(strcmp(requisicao->command, "OPTIONS") == 0){
+		fprintf(stderr,"----9");
         getCabecalho(requisicao->params->next->param, requisicao, OPTIONS, fout); //imprime o cabecalho
     }
+    else if(strcmp(requisicao->command, "POST") == 0){
+		fprintf(stderr,"----10");
+        fprintf(fout,"\n");
+		if(postValido){
+			getCabecalho(requisicao->params->next->param, requisicao, GET, fout); //imprime o cabecalho
+			get_access(requisicao->params->next->param, 1, fout, NULL);   //imprime o HTML
+		}
+		else{
+			strcpy(requisicao->params->next->param,"/dir1/denied.html");
+			getCabecalho(requisicao->params->next->param, requisicao, GET, fout); //imprime o cabecalho
+			get_access(requisicao->params->next->param, 1, fout, NULL);   //imprime o HTML
+		}
+    }
     else{
+	  fprintf(stderr,"----11");
       //not allowed
       getCabecalho(requisicao->params->next->param, requisicao, NOT_ALLOWED, fout);
       fprintf(fout,"\n\n");
       erro(NOT_ALLOWED, fout);
     }
+    fprintf(stderr,"----12");
     return;
 }
 

@@ -26,6 +26,7 @@
     command_list *symtab_get_parse_result();
     void add_param_list_begin(char *param);
     void print_list();
+    void separaLogin(char *comandoTxt);
 
     struct command_list * list = NULL;
     struct command_list * requisicao = NULL;
@@ -35,13 +36,17 @@
     char comandoTxt[200];
     char paramTxt[200];
     char frase[200];
+    char nome[200];
+    char senha[200];
+    char nomevalido[200] = "EA872";
+    char senhavalida[200] = "123";
     %}
 
 %union {
     char str[200];
 }
 
-%token <str> PALAVRA COMANDO_HTTP PARAMETRO_SP PARAMETRO_UA COMANDO
+%token <str> PALAVRA COMANDO_HTTP PARAMETRO_SP PARAMETRO_UA COMANDO LOGINDATA
 %token VIRGULA NL DP INVALIDO FIM_REQ
 
 %type <str> palavra DP parametro parametro_NL comando_HTTP comando_sp
@@ -65,7 +70,11 @@ linha   :   comando parametro_final {nLinha++;
                                     comando_detectado = 0;
                                     fprintf(stderr,RED "Erro(l_%d): Nao ha comando valido. \n" RESET, nLinha);}
             | FIM_REQ               {nLinha++;
+									fprintf(stderr,"FIM REQ CONSUMIDO\n");
                                     comando_detectado = 0;}
+            |LOGINDATA				{strcpy(comandoTxt, $1);
+									separaLogin(comandoTxt);
+									}
 
 comando_HTTP : COMANDO_HTTP         {strcpy(comandoTxt, $1);
                                     requisicao = add_command_list(&comandoTxt);}
@@ -105,6 +114,8 @@ parametro: palavra VIRGULA          { if(comando_detectado){
                                     }};
 
 palavra : PALAVRA
+
+
 
 %%
 
@@ -184,6 +195,42 @@ void add_param_list_begin(char *param) {
 
     return;
 }
+
+void separaLogin(char *comandoTxt){
+	char * pch;
+	pch = strtok(comandoTxt, "&");
+	int i=0;
+	while(pch){
+		fprintf(stderr, "%s\n", pch);
+		if(i==0) strcpy(nome,pch);
+		if(i==1) strcpy(senha,pch);
+		pch = strtok(NULL, "&");
+		i++;
+	}
+	fprintf(stderr,"nome:%s senha:%s\n",nome,senha);
+	
+	pch = strtok(nome, "=");
+	pch = strtok(NULL, "=");
+	strcpy(nome,pch);
+	fprintf(stderr, "------------------------nome: %s\n",nome);
+	
+	pch = strtok(senha, "=");
+	pch = strtok(NULL, "=");
+	strcpy(senha,pch);
+	fprintf(stderr, "------------------------senha: %s\n",senha);
+}
+
+
+
+
+int acessoValido(){
+	if(strcmp(nome, nomevalido)) return 0;
+	if(strcmp(senha, senhavalida)) return 0;
+	return 1;
+}
+
+
+
 
 command_list *symtab_get_parse_result(){
   return requisicao;
