@@ -7,13 +7,39 @@
 #include <netinet/in.h>
 #include <signal.h>
 
+typedef struct Users {
+      char nome[200];
+      char senha[200];
+} Users;
+
 int numMaxChild = 2;
+
+Users users[100];
+int n_users=0;
 
 void incChild(){
   numMaxChild++;
   //printf("///////////2/////////// numMaxChild=%d\n", numMaxChild);
 }
 
+int verificaUser(char * name){
+	int i;
+	for( i = 0; i<n_users; i++){
+		if(strcmp(users[i].nome , name)==0) return 1;
+	}
+	return 0;
+}
+
+int verificaLogin(char * name, char * senha){
+	int i;
+	for( i = 0; i<n_users; i++){
+		if(strcmp(users[i].nome , name)==0){
+			if(strcmp(users[i].senha , senha)==0) return 1;
+			else return 0;
+		}
+	}
+	return 0;
+}
 
 main(arg_cont, arg_valor)
 int arg_cont;
@@ -39,9 +65,15 @@ char **arg_valor;
   long length;
   FILE * f;
   int pid;
+  char *nome, *senha;
+  int cadastro, postValido;
 
   signal(SIGCHLD, incChild);
 
+  //insere o primeiro usuario
+  strcpy(users[n_users].nome,"EA872");
+  strcpy(users[n_users].senha,"123");
+  n_users++;
 
   /*
    * Verifique os argumentos. Deve haver apenas um: o número da porta a se conectar.
@@ -158,10 +190,30 @@ char **arg_valor;
           getOutput(NULL, fout, 0);
           return 0;
           }
-          validade = acessoValido();
-		  fprintf(stderr, "####################validade: %d\n", validade);
           result = symtab_get_parse_result();
-          getOutput(result, fout, validade);
+		  cadastro = verificaReg(result->params->next->param);
+		  senha = getSenha();
+		  nome = getNome();
+		  printf("NOME: %s\t SENHA: %s\n", nome, senha);
+		  if(cadastro){
+			  if(verificaUser(nome)==0){
+				  //insere o primeiro usuario
+				  strcpy(users[n_users].nome,nome);
+				  strcpy(users[n_users].senha,senha);
+				  n_users++;
+				  postValido = 3;
+			  }
+			  else{
+				  postValido = 2;
+			  }
+		  }
+		  else{
+			  if(verificaLogin(nome,senha)) postValido = 1;
+			  else postValido = 0;
+		  }
+		  fprintf(stderr, "***************postValido= %d\n", postValido);
+		  //antes disse precisamos saber se eh login ou cadastro, se foi falho ou sucesso
+          getOutput(result, fout, postValido);
           
           /* Fechando o arquivo... */
           fprintf(fout, "\n\0" );

@@ -1,35 +1,35 @@
 
 HTTP/1.1  	200 OK
-Date: 		Fri Nov 17 17:54:49 2017 -02
+Date: 		Fri Nov 17 21:23:39 2017 -02
 Server: 	Servidor HTTP ver. 0.2 Grupo 7
-Last-Modified: 	Fri Nov 17 17:53:42 2017 -02
+Last-Modified: 	Fri Nov 17 18:32:57 2017 -02
 Accept-Ranges: 	bytes
-Content-Length: 412 bytes
+Content-Length: 799 bytes
 Vary: 		Accept-Encoding
 Content-Type: 	text/html
 Connection: 	keep-alive
 
+<!DOCTYPE HTML>
 <html>
-    <head>
-    <title>       </title>
-    <style type="text/css">
-    <!--
-    h1	{text-align:left;
-        font-family:Arial, Helvetica, Sans-Serif;
-        }
-
-    p	{text-indent:20px;
-        }
-    -->
-    </style>
-    </head>
-    <body bgcolor = "#ffffcc" text = "#000000">
-    <h1>INDEX.HTML !</h1>
-
-    <P> THIS IS A GENERIC HTML INDEX PAGE </P>
-    <P> INSIDE ./dir1 </P>
-
-    </body>
-    </html>
- 
-
+<head>	
+<title>Accounting</title>
+</head>
+<body>
+	<form action="dir1/accounts.html" method="post">
+		<fieldset><legend>Login</legend>
+			<label for="name">Name: </label><input  type="text" name="name" id="name" value="">
+			<label for="password">Password: </label><input  type="password" name="password" id="password" >
+			<input type="submit" value="Login" id="sub">
+		</fieldset>	
+	</form>
+	<P></P>
+	<h1></h1>
+	<form action="dir1/register.html" method="post">
+		<fieldset><legend>Register</legend>
+			<label for="name">Name: </label><input  type="text" name="name" id="name" value="">
+			<label for="password">Password: </label><input  type="password" name="password" id="password" >
+			<input type="submit" value="Register" id="sub">
+		</fieldset>	
+	</form>
+</body>
+</html>

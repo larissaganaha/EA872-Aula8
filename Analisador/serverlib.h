@@ -21,3 +21,4 @@ int escreveArquivo(char address[ADDRESS_SIZE], struct stat fileStat, FILE * fout
 tipo_cabecalho get_access(char *local , int imprimir, FILE * fout, char *endereco);
 command_list * findParam(command_list * requisicao, char * param);
 void erro(tipo_cabecalho tipo, FILE * fout);
+int verificaReg(char *local);

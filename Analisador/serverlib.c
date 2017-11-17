@@ -225,15 +225,30 @@ void getOutput(command_list * requisicao, FILE * fout, int postValido){
     else if(strcmp(requisicao->command, "POST") == 0){
 		fprintf(stderr,"----10");
         fprintf(fout,"\n");
-		if(postValido){
+		if(postValido==1){
+			//login sucesso
 			getCabecalho(requisicao->params->next->param, requisicao, GET, fout); //imprime o cabecalho
 			get_access(requisicao->params->next->param, 1, fout, NULL);   //imprime o HTML
 		}
-		else{
+		else if(postValido==0){
+			//login falho
 			strcpy(requisicao->params->next->param,"/dir1/denied.html");
 			getCabecalho(requisicao->params->next->param, requisicao, GET, fout); //imprime o cabecalho
 			get_access(requisicao->params->next->param, 1, fout, NULL);   //imprime o HTML
 		}
+		else if(postValido==2){
+			//registro falho
+			strcpy(requisicao->params->next->param,"/dir1/registerfail.html");
+			getCabecalho(requisicao->params->next->param, requisicao, GET, fout); //imprime o cabecalho
+			get_access(requisicao->params->next->param, 1, fout, NULL);   //imprime o HTML
+		}
+		else if(postValido==3){
+			//registro sucesso
+			strcpy(requisicao->params->next->param,"/dir1/registersuccess.html");
+			getCabecalho(requisicao->params->next->param, requisicao, GET, fout); //imprime o cabecalho
+			get_access(requisicao->params->next->param, 1, fout, NULL);   //imprime o HTML
+		}
+		
     }
     else{
 	  fprintf(stderr,"----11");
@@ -411,4 +426,13 @@ void erro(tipo_cabecalho tipo,FILE * fout){
   fprintf(fout,"<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>%s</title>\n</head><body>\n<h1>%s</h1>\n", title, h1);
   fprintf(fout,"<p>%s\n</p>\n</body></html>\n\n", paragraph);
   return;
+}
+
+int verificaReg(char *local){
+  char registro[21] = "/dir1/register.html";
+  char login[21] = "/dir1/accounts.html";
+  
+  if(strcmp(local, registro) == 0)
+    return 1;
+  return 0;
 }

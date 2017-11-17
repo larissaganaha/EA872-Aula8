@@ -38,8 +38,8 @@
     char frase[200];
     char nome[200];
     char senha[200];
-    char nomevalido[200] = "EA872";
-    char senhavalida[200] = "123";
+    //char nomevalido[200] = "EA872";
+    //char senhavalida[200] = "123";
     %}
 
 %union {
@@ -222,16 +222,23 @@ void separaLogin(char *comandoTxt){
 
 
 
-
+/*
 int acessoValido(){
 	if(strcmp(nome, nomevalido)) return 0;
 	if(strcmp(senha, senhavalida)) return 0;
 	return 1;
 }
-
+*/
 
 
 
 command_list *symtab_get_parse_result(){
   return requisicao;
+}
+
+char *getNome(){
+  return nome;
+}
+char *getSenha(){
+  return senha;
 }
